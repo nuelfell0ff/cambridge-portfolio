@@ -159,7 +159,7 @@ export default function PortfolioHero() {
 
             {/* Image Placeholder */}
             <img 
-              src="/path-to-your-image.jpg" 
+              src="/IMG_0015.jpg" 
               alt="Timilehin Seyi Ogunsakin" 
               className="w-full h-full object-cover rounded-xl grayscale contrast-125 hover:grayscale-0 transition-all duration-700 ease-out"
               onError={(e) => {
