@@ -161,7 +161,7 @@ export default function PortfolioHero() {
             <img 
               src="/IMG_0015.jpg" 
               alt="Timilehin Seyi Ogunsakin" 
-              className="w-full h-full object-cover rounded-xl grayscale contrast-125 hover:grayscale-0 transition-all duration-700 ease-out"
+              className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
               onError={(e) => {
                 e.currentTarget.style.display = 'none';
                 const parent = e.currentTarget.parentElement;
