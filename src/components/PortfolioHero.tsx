@@ -195,39 +195,6 @@ export default function PortfolioHero() {
         </motion.div>
 
       </main>
-
-      {/* --- Footer Highlights Grid (Icons and text centered on mobile) --- */}
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={2}
-        className="w-full max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-8 border-t border-neutral-900/50 z-10"
-      >
-        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Founder</h4>
-          <p className="text-xs text-neutral-400">MedxLearn</p>
-        </div>
-
-        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">AI Innovator</h4>
-          <p className="text-xs text-neutral-400">Deep Learning</p>
-        </div>
-
-        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Health Tech Leader</h4>
-          <p className="text-xs text-neutral-400">Systems Strategy</p>
-        </div>
-
-        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Digital Visionary</h4>
-          <p className="text-xs text-neutral-400">Future Ecosystems</p>
-        </div>
-      </motion.section>
     </section>
   );
         }
