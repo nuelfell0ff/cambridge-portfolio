@@ -3,16 +3,16 @@ import React, { useEffect } from 'react';
 import { motion, useAnimation, Variants } from 'framer-motion';
 import Navbar from '@/components/Navbar'; 
 
-// Defined colors from Lexi Ai logo
+// Defined colors matching the professional medical blue theme
 const colors = {
   blue: '#193A60', 
-  green: '#22A360', 
-  accentGreen: '#3EC36F', 
+  green: '#1F7299', // Swapped out original green for the medical blue highlight
+  accentGreen: '#1F7299', // Swapped out accent green
   textWhite: '#FFFFFF',
   bgDark: '#0a0806',
 };
 
-// SVG Icon Components for Footer (using accent green)
+// SVG Icon Components for Footer (using new medical blue highlight)
 const Icon = ({ path }: { path: string }) => (
   <svg
     className="w-4 h-4"
@@ -67,7 +67,7 @@ export default function PortfolioHero() {
         fontFamily: "'Poppins', sans-serif",
       }}
     >
-      {/* Subtle background glow - matching the new green color */}
+      {/* Subtle background glow - matching the new medical blue color */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
@@ -81,13 +81,13 @@ export default function PortfolioHero() {
       {/* --- Hero Grid Section --- */}
       <main className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full py-12 md:py-16 z-10">
         
-        {/* Left Column: Text & CTAs */}
+        {/* Left Column: Text & CTAs (Centered on mobile, left-aligned on desktop) */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
           custom={1}
-          className="md:col-span-7 flex flex-col justify-center"
+          className="md:col-span-7 flex flex-col justify-center items-center md:items-start text-center md:text-left"
         >
           {/* Subtle Overline Tag */}
           <span 
@@ -97,26 +97,26 @@ export default function PortfolioHero() {
             The Future of Health is AI-Driven
           </span>
 
-          {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight max-w-2xl">
+          {/* Main Heading (Larger text-5xl base on mobile) */}
+          <h1 className="text-5xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight max-w-2xl">
             Timilehin Seyi <br />
             <span style={{ color: colors.green }}>Ogunsakin</span>
           </h1>
 
-          {/* Subtitle Roles */}
-          <p className="mt-6 text-neutral-400 text-sm sm:text-base max-w-xl font-light leading-relaxed">
+          {/* Subtitle Roles (Slightly larger base text sizing on mobile) */}
+          <p className="mt-6 text-neutral-400 text-base sm:text-base max-w-xl font-light leading-relaxed">
             Founder <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
             Healthcare Technology Entrepreneur <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
             Medical Student <span className="mx-1 sm:mx-2 text-neutral-600">|</span> <br className="hidden sm:inline" />
             AI & Digital Health Innovator
           </p>
 
-          {/* Call to Actions */}
-          <div className="mt-8 flex flex-wrap gap-4">
+          {/* Call to Actions (Centered grouping on mobile) */}
+          <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
             <button
               className="text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center gap-2 transition-all shadow-lg"
               style={{ backgroundColor: colors.accentGreen }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = colors.green}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#15526f'} // Darker shade of medical blue for hover
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
             >
               Schedule a Meeting
