@@ -111,10 +111,10 @@ export default function PortfolioHero() {
             AI & Digital Health Innovator
           </p>
 
-          {/* Call to Actions (Centered grouping on mobile) */}
-          <div className="mt-8 flex flex-wrap justify-center md:justify-start gap-4">
+          {/* Call to Actions (Equally sized, centered, stacked cleanly on mobile) */}
+          <div className="mt-8 flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 w-full max-w-md sm:max-w-none">
             <button
-              className="text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center gap-2 transition-all shadow-lg"
+              className="w-full sm:w-auto text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
               style={{ backgroundColor: colors.accentGreen }}
               onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#15526f'} // Darker shade of medical blue for hover
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
@@ -132,7 +132,7 @@ export default function PortfolioHero() {
             </button>
 
             <button
-              className="border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all"
+              className="w-full sm:w-auto border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all text-center flex items-center justify-center"
               style={{ backgroundColor: `rgba(25, 58, 96, 0.15)` }}
             >
               View Portfolio
@@ -191,7 +191,7 @@ export default function PortfolioHero() {
 
       </main>
 
-      {/* --- Footer Highlights Grid --- */}
+      {/* --- Footer Highlights Grid (Icons and text centered on mobile) --- */}
       <motion.section
         initial="hidden"
         animate="visible"
@@ -199,25 +199,25 @@ export default function PortfolioHero() {
         custom={2}
         className="w-full max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-8 border-t border-neutral-900/50 z-10"
       >
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
           <Icon path={crossPath} />
           <h4 className="text-sm font-semibold text-neutral-200">Founder</h4>
           <p className="text-xs text-neutral-400">MedxLearn</p>
         </div>
 
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
           <Icon path={crossPath} />
           <h4 className="text-sm font-semibold text-neutral-200">AI Innovator</h4>
           <p className="text-xs text-neutral-400">Deep Learning</p>
         </div>
 
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
           <Icon path={crossPath} />
           <h4 className="text-sm font-semibold text-neutral-200">Health Tech Leader</h4>
           <p className="text-xs text-neutral-400">Systems Strategy</p>
         </div>
 
-        <div className="flex flex-col space-y-1">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-1">
           <Icon path={crossPath} />
           <h4 className="text-sm font-semibold text-neutral-200">Digital Visionary</h4>
           <p className="text-xs text-neutral-400">Future Ecosystems</p>
@@ -225,4 +225,4 @@ export default function PortfolioHero() {
       </motion.section>
     </div>
   );
-}
+            }
