@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect } from 'react';
-import { motion, useAnimation, Variants } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 const colors = {
   blue: '#193A60', 
@@ -10,12 +10,11 @@ const colors = {
   bgDark: '#0a0806',
 };
 
-// Target content data structure
 const blogTopics = [
   {
     title: "Healthcare",
     description: "Analyzing shifts in global health systems, clinical workflows, and modern patient care delivery models.",
-    icon: "M19 10.5V20a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9.5a4 4 0 0 1 8 0V12h2v-1.5a4 4 0 0 1 4 0Z", // Clinical node representation
+    icon: "M19 10.5V20a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-9.5a4 4 0 0 1 8 0V12h2v-1.5a4 4 0 0 1 4 0Z",
   },
   {
     title: "Leadership",
@@ -49,37 +48,14 @@ const blogTopics = [
   },
 ];
 
-// Staggered layout variants
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.1 }
-  }
-};
-
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 25 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1] } 
-  }
-};
-
 export default function BlogTopicsSection() {
-  const controls = useAnimation();
-
-  useEffect(() => {
-    controls.start("visible");
-  }, [controls]);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <section 
-      className="w-full text-white px-6 md:px-12 py-16 md:py-20 relative overflow-hidden"
+      className="w-full text-white px-6 md:px-12 py-16 md:py-20 relative overflow-hidden border-t border-neutral-900/40"
       style={{ backgroundColor: colors.bgDark, fontFamily: "'Poppins', sans-serif" }}
     >
-      {/* Background Subtle Accent Blob */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
@@ -89,7 +65,7 @@ export default function BlogTopicsSection() {
 
       <div className="max-w-7xl mx-auto w-full z-10 relative">
         
-        {/* Section Heading Area */}
+        {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
           <div>
             <span 
@@ -107,72 +83,81 @@ export default function BlogTopicsSection() {
           </p>
         </div>
 
-        {/* Dynamic Responsive Grid */}
-        <motion.div 
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          initial="hidden"
-          animate={controls}
-          variants={containerVariants}
-        >
-          {blogTopics.map((topic, idx) => (
-            <motion.div
-              key={idx}
-              variants={cardVariants}
-              whileHover={{ y: -6, transition: { duration: 0.2, ease: "easeOut" } }}
-              className="group relative rounded-xl border border-neutral-800/80 bg-neutral-900/10 backdrop-blur-sm p-6 flex flex-col justify-between transition-colors duration-300 hover:border-neutral-700/80 hover:bg-neutral-900/30 overflow-hidden"
-            >
-              {/* Subtle Linear Hover Glow Border effect */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, ${colors.green}08 0%, transparent 50%)`
-                }}
-              />
+        {/* Dynamic Responsive Grid Layout */}
+        <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence mode="popLayout">
+            {blogTopics.map((topic, idx) => {
+              // Always show on tablet/desktop. On mobile, conditionally filter out index >= 3
+              const isHiddenOnMobile = !isExpanded && idx >= 3;
 
-              <div>
-                {/* Icon Wrapper Frame */}
-                <div 
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-5 border border-neutral-800/80 transition-colors duration-300 group-hover:border-neutral-700"
-                  style={{ backgroundColor: `rgba(25, 58, 96, 0.12)` }}
+              return (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: (idx % 3) * 0.05 }}
+                  whileHover={{ y: -6, transition: { duration: 0.2, ease: "easeOut" } }}
+                  className={`group relative rounded-xl border border-neutral-800/80 bg-neutral-900/10 backdrop-blur-sm p-6 flex flex-col justify-between transition-colors duration-300 hover:border-neutral-700/80 hover:bg-neutral-900/30 overflow-hidden ${
+                    isHiddenOnMobile ? "hidden sm:flex" : "flex"
+                  }`}
                 >
-                  <svg 
-                    className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" 
-                    fill="none" 
-                    stroke={colors.accentGreen} 
-                    strokeWidth="2" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d={topic.icon} />
-                  </svg>
-                </div>
+                  <div 
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      backgroundImage: `linear-gradient(135deg, ${colors.green}08 0%, transparent 50%)`
+                    }}
+                  />
 
-                {/* Topic Meta Text */}
-                <h3 className="text-lg font-semibold text-neutral-100 mb-2 transition-colors duration-300 group-hover:text-white">
-                  {topic.title}
-                </h3>
-                <p className="text-neutral-400 text-xs font-light leading-relaxed mb-6">
-                  {topic.description}
-                </p>
-              </div>
+                  <div>
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center mb-5 border border-neutral-800/80 transition-colors duration-300 group-hover:border-neutral-700"
+                      style={{ backgroundColor: `rgba(25, 58, 96, 0.12)` }}
+                    >
+                      <svg 
+                        className="w-5 h-5 transition-transform duration-300 group-hover:scale-110" 
+                        fill="none" 
+                        stroke={colors.accentGreen} 
+                        strokeWidth="2" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d={topic.icon} />
+                      </svg>
+                    </div>
 
-              {/* Action Vector Indicator */}
-              <div className="flex items-center gap-1.5 text-xs font-medium tracking-wide opacity-80 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer" style={{ color: colors.accentGreen }}>
-                <span>Explore essays</span>
-                <svg 
-                  className="w-3 h-3 transform transition-transform duration-300 group-hover:translate-x-1" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2.5" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
-              </div>
-            </motion.div>
-          ))}
+                    <h3 className="text-lg font-semibold text-neutral-100 mb-2 group-hover:text-white transition-colors">
+                      {topic.title}
+                    </h3>
+                    <p className="text-neutral-400 text-xs font-light leading-relaxed mb-6">
+                      {topic.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </motion.div>
+
+        {/* --- Mobile Only "See More" Interaction Controls --- */}
+        <div className="flex sm:hidden justify-center mt-10">
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-medium border border-neutral-800 bg-neutral-900/30 text-neutral-300 hover:text-white transition-colors active:scale-95"
+          >
+            <span>{isExpanded ? "See Less" : "See All Topics"}</span>
+            <svg 
+              className={`w-3.5 h-3.5 transform transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`} 
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2.5" 
+              viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+        </div>
 
       </div>
     </section>
   );
-}
+                        }
