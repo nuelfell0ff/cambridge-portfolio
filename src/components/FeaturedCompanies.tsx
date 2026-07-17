@@ -20,7 +20,7 @@ const companies = [
   },
   {
     name: "MedxVerse Telemedicine & Virtual Care Ltd",
-    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784282802/IMG_0015_nxb79u.jpg", 
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313040/IMG_0341_mpyrmt.jpg", 
     description: "An immersive digital health ecosystem built to break down geographical walls and provide borderless virtual care.",
     mission: "To pioneer next-generation virtual care delivery through spatial computing and intelligent diagnostics.",
     impact: "Democratizing expert specialist consultations for patients in remote and underserved regions.",
@@ -28,7 +28,7 @@ const companies = [
   },
   {
     name: "MedxGo",
-    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784282802/IMG_0015_nxb79u.jpg", 
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313041/Frame_ieybdx.jpg", 
     description: "An agile healthcare logistics platform built to mobilize medical supplies and quick-response support teams efficiently.",
     mission: "To streamline clinical operations and secure immediate resource dispatch during critical times.",
     impact: "Creating reliable channels for on-demand medical logistics and localized diagnostic support.",
