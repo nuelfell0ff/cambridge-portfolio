@@ -9,6 +9,7 @@ import VisionStatement from '@/components/VisionStatement';
 import MediaPress from '@/components/MediaPress';
 import BlogTopicsSection from '@/components/BlogTopicsSection';
 import Testimonials from '@/components/Testimonials';
+import NewsletterSection from '@/components/NewsletterSection';
 
 // Define the colors object here so the selection bar or any page-level styles can safely read it!
 const colors = {
@@ -44,6 +45,8 @@ export default function Home() {
       <BlogTopicsSection />
 
       <Testimonials />
+
+      <NewsletterSection />
     </main>
   );
 }
