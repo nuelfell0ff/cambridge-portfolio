@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect } from 'react';
 import { motion, useAnimation, Variants } from 'framer-motion';
-import Navbar from '@/components/Navbar'; 
+import Navbar from '@/components/Navbar';
+import heroImage from '@/IMG_0015.jpg'
 
 // Defined colors matching the professional medical blue theme
 const colors = {
@@ -159,7 +160,7 @@ export default function PortfolioHero() {
 
             {/* Image Placeholder */}
             <img 
-              src="/IMG_0015.jpg" 
+              src={heroImage}
               alt="Timilehin Seyi Ogunsakin" 
               className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
               onError={(e) => {
