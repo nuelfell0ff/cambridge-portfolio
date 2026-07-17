@@ -130,25 +130,6 @@ export default function PhotoGallery() {
                         {item.description}
                       </p>
                     </div>
-
-                    {/* View Context Trigger */}
-                    <div className="pt-2">
-                      <a 
-                        href={item.link}
-                        className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-white border-b border-white/20 pb-0.5 hover:border-white transition-all"
-                      >
-                        View Context
-                        <svg 
-                          className="w-3 h-3 text-neutral-400" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          strokeWidth="2.5" 
-                                                    viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                        </svg>
-                      </a>
-                    </div>
                   </div>
                 </motion.div>
               );
