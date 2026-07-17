@@ -9,7 +9,6 @@ const colors = {
   bgDark: '#0a0806',
 };
 
-// Perks map directly to your requirements
 const subscriptionPerks = [
   { title: "Articles", desc: "Deep dives into digital health, clinical AI, and full-stack software architectures." },
   { title: "Updates", desc: "Monthly changelogs and build progress from ongoing medical tech platforms." },
@@ -33,12 +32,8 @@ export default function NewsletterSection() {
     setStatus('loading');
 
     try {
-      // API Route Integration Placeholder
-      // const res = await fetch('/api/newsletter', { method: 'POST', body: JSON.stringify({ email }) });
-      
       // Simulating network delay for production feel
       await new Promise((resolve) => setTimeout(resolve, 1200));
-      
       setStatus('success');
       setEmail('');
     } catch (err) {
@@ -155,7 +150,7 @@ export default function NewsletterSection() {
                 </div>
 
                 {/* --- Animated Interface Feedback Messaging --- */}
-                <AnimatePresence mode="fast">
+                <AnimatePresence mode="popLayout">
                   {status === 'error' && (
                     <motion.p 
                       initial={{ opacity: 0, y: -5 }}
@@ -191,4 +186,4 @@ export default function NewsletterSection() {
       </div>
     </section>
   );
-}
+                          }
