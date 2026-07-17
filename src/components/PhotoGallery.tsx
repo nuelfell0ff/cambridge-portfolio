@@ -1,22 +1,13 @@
 "use client";
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, Variants, AnimatePresence } from 'framer-motion';
 
 const colors = {
   green: '#1F7299', // Professional medical blue highlight
   bgDark: '#0a0806',
 };
 
-// --- Easily drop your Cloudinary image links here ---
-// Keep 'f_auto,q_auto,w_800' in your URLs for blazing-fast loading!
 const galleryItems = [
-  
-  {
-    title: "Studio Portraits",
-    description: "Official executive headshot for leadership panels.",
-    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285393/IMG_0016_z3ccvn.jpg",
-    link: "#",
-  },
   {
     title: "Speaking at Events",
     description: "Keynote address on healthcare automation frameworks.",
@@ -30,9 +21,27 @@ const galleryItems = [
     link: "#",
   },
   {
+    title: "Startup Meetings",
+    description: "Strategic scaling sessions with the MedxLearn core team.",
+    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg",
+    link: "#",
+  },
+  {
     title: "Conferences",
     description: "Exchanging digital health architecture breakthroughs with MedxVerse OAU Campus.",
     imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285694/IMG-20260418-WA0070_ok5mtk.jpg",
+    link: "#",
+  },
+  {
+    title: "Community Outreach",
+    description: "Democratizing medical access and health education protocols.",
+    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg",
+    link: "#",
+  },
+  {
+    title: "Studio Portraits",
+    description: "Official executive headshot for leadership panels.",
+    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285393/IMG_0016_z3ccvn.jpg",
     link: "#",
   },
 ];
@@ -46,15 +55,9 @@ const fadeInUp: Variants = {
   }
 };
 
-const staggerContainer: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
-};
-
 export default function PhotoGallery() {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <section 
       id="gallery"
@@ -84,71 +87,84 @@ export default function PhotoGallery() {
         </motion.div>
 
         {/* --- Responsive Image Grid --- */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainer}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {galleryItems.map((item, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              className="relative aspect-[4/3] sm:aspect-square rounded-2xl overflow-hidden border border-neutral-900 bg-neutral-950/40 group shadow-lg"
-            >
-              {/* Main Background Image - Increased default brightness to keep original photos vibrant */}
-              <img 
-                src={item.imageUrl} 
-                alt={item.title} 
-                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 filter brightness-[0.95] md:brightness-[0.9] group-hover:brightness-[0.75]"
-                loading="lazy"
-              />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <AnimatePresence mode="popLayout">
+            {galleryItems.map((item, index) => {
+              // On mobile/small screens, hide index 3, 4, 5 if not expanded.
+              // On large desktop screens (lg:grid), Tailwind overrides make everything layout properly.
+              const shouldHideOnMobile = !isExpanded && index >= 3;
 
-              {/* Permanent elegant border on the container */}
-              <div className="absolute inset-0 border border-neutral-900/40 rounded-2xl pointer-events-none" />
+              return (
+                <motion.div
+                  key={index}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-50px" }}
+                  variants={fadeInUp}
+                  // Handles hiding on mobile via simple utility layout toggle
+                  className={`relative aspect-[4/3] sm:aspect-square rounded-2xl overflow-hidden border border-neutral-900 bg-neutral-950/40 group shadow-lg ${
+                    shouldHideOnMobile ? 'hidden sm:block' : 'block'
+                  }`}
+                >
+                  {/* Main Background Image */}
+                  <img 
+                    src={item.imageUrl} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 filter brightness-[0.95] md:brightness-[0.9] group-hover:brightness-[0.75]"
+                    loading="lazy"
+                  />
 
-              {/* 
-                Text & Link Overlay with Lighter Bottom-up Gradient Protection:
-                - Reduced bottom color to black/75 (down from 95)
-                - Reduced middle transition to black/20 (down from 50)
-              */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-6 flex flex-col justify-end transition-all duration-500 ease-out">
-                <div>
-                  <span 
-                    className="text-[10px] font-bold tracking-wider uppercase px-2 py-1 rounded bg-neutral-900/80 border border-neutral-800/60 inline-block mb-3"
-                    style={{ color: colors.green }}
-                  >
-                    {item.title}
-                  </span>
-                  <p className="text-sm text-neutral-200 font-medium leading-relaxed mb-4">
-                    {item.description}
-                  </p>
-                </div>
+                  {/* Border Protection Layer */}
+                  <div className="absolute inset-0 border border-neutral-900/40 rounded-2xl pointer-events-none" />
 
-                {/* View Link Trigger */}
-                <div className="pt-2">
-                  <a 
-                    href={item.link}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-white border-b border-white/20 pb-0.5 hover:border-white transition-all"
-                  >
-                    View Context
-                    <svg 
-                      className="w-3 h-3 text-neutral-400" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2.5" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
-                    </svg>
-                  </a>
-                </div>
-              </div>
+                  {/* Gradient Protected Content Layout */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-6 flex flex-col justify-end transition-all duration-500 ease-out">
+                    <div>
+                      <span 
+                        className="text-[10px] font-bold tracking-wider uppercase px-2 py-1 rounded bg-neutral-900/80 border border-neutral-800/60 inline-block mb-3"
+                        style={{ color: colors.green }}
+                      >
+                        {item.title}
+                      </span>
+                      <p className="text-sm text-neutral-200 font-medium leading-relaxed mb-4">
+                        {item.description}
+                      </p>
+                    </div>
 
-            </motion.div>
-          ))}
-        </motion.div>
+                    {/* View Context Trigger */}
+                    <div className="pt-2">
+                      <a 
+                        href={item.link}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-white border-b border-white/20 pb-0.5 hover:border-white transition-all"
+                      >
+                        View Context
+                        <svg 
+                          className="w-3 h-3 text-neutral-400" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2.5" 
+                                                    viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                        </svg>
+                      </a>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
+        </div>
+
+        {/* --- Simple Mobile Adaptive 'See More' Button Layout --- */}
+        <div className="mt-10 flex justify-center sm:hidden">
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="border border-neutral-800 bg-neutral-900/30 hover:bg-neutral-900/60 text-xs text-neutral-300 tracking-wider font-semibold uppercase px-6 py-3 rounded-xl transition-all"
+          >
+            {isExpanded ? 'See Less' : 'See More'}
+          </button>
+        </div>
 
       </div>
     </section>
