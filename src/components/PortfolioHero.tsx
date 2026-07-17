@@ -160,18 +160,22 @@ export default function PortfolioHero() {
 
             {/* Image Placeholder */}
             <img 
-              src="/IMG_0015.JPG"
-              alt="Timilehin Seyi Ogunsakin" 
-              className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  const fallback = document.getElementById('image-fallback');
-                  if (fallback) fallback.style.display = 'flex';
-                }
-              }}
-            />
+  src="https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg"
+  alt="Timilehin Seyi Ogunsakin" 
+  className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
+  // Tells the browser to prioritize loading this image immediately (since it's above the fold)
+  fetchPriority="high" 
+  loading="eager"
+  onError={(e) => {
+    e.currentTarget.style.display = 'none';
+    const parent = e.currentTarget.parentElement;
+    if (parent) {
+      const fallback = document.getElementById('image-fallback');
+      if (fallback) fallback.style.display = 'flex';
+    }
+  }}
+/>
+
 
             {/* Beautiful Graphic Fallback */}
             <div 
