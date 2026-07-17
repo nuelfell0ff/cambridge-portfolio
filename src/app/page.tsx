@@ -3,6 +3,7 @@ import React from 'react';
 import PortfolioHero from '@/components/PortfolioHero';
 import ProfessionalHeadline from '@/components/ProfessionalHeadline'; // New Import
 import About from '@/components/About';
+import FeaturedCompanies from '@/components/FeaturedCompanies';
 
 export default function Home() {
   return (
@@ -15,6 +16,8 @@ export default function Home() {
       
       {/* 3. Detailed Bio */}
       <About />
+
+      <FeaturedCompanies />
     </main>
   );
 }
