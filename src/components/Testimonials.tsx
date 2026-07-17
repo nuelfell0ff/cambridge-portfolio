@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const colors = {
   blue: '#193A60', 
@@ -9,7 +9,6 @@ const colors = {
   bgDark: '#0a0806',
 };
 
-// Exactly 6 targeted source types from your requirements
 const testimonials = [
   {
     role: "Doctor",
@@ -90,7 +89,6 @@ export default function TestimonialsSection() {
         <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <AnimatePresence mode="popLayout">
             {testimonials.map((item, idx) => {
-              // Standard responsiveness behavior mirroring the previous section layout rule
               const isHiddenOnMobile = !isExpanded && idx >= 3;
 
               return (
@@ -126,7 +124,7 @@ export default function TestimonialsSection() {
                         viewBox="0 0 24 24"
                         style={{ color: colors.accentGreen }}
                       >
-                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.85h4v10h-10zm-14 0v-7.391c0-5.704 3.748-9.57 9 integra-9l1 2.151c-2.432.917-3.995 3.638-3.995 5.85h4v10h-10z" d="M4.583 17.321C3.553 16.227 3 14.685 3 12.7c0-2.433.554-4.759 1.663-6.977l1.393 1.018C5.181 8.358 4.7 9.873 4.7 11.291h2.518v6.03H4.583zm9 0c-1.029-1.094-1.553-2.636-1.553-4.621 0-2.433.554-4.759 1.663-6.977l1.393 1.018c-.875 1.617-1.356 3.132-1.356 4.55h2.518v6.03h-2.665z"/>
+                        <path d="M4.583 17.321C3.553 16.227 3 14.685 3 12.7c0-2.433.554-4.759 1.663-6.977l1.393 1.018C5.181 8.358 4.7 9.873 4.7 11.291h2.518v6.03H4.583zm9 0c-1.029-1.094-1.553-2.636-1.553-4.621 0-2.433.554-4.759 1.663-6.977l1.393 1.018c-.875 1.617-1.356 3.132-1.356 4.55h2.518v6.03h-2.665z"/>
                       </svg>
                     </div>
 
@@ -173,4 +171,4 @@ export default function TestimonialsSection() {
       </div>
     </section>
   );
-            }
+         }
