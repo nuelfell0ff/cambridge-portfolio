@@ -108,11 +108,11 @@ export default function PhotoGallery() {
               variants={fadeInUp}
               className="relative aspect-[4/3] sm:aspect-square rounded-2xl overflow-hidden border border-neutral-900 bg-neutral-950/40 group shadow-lg"
             >
-              {/* Main Background Image */}
+              {/* Main Background Image - Increased default brightness to keep original photos vibrant */}
               <img 
                 src={item.imageUrl} 
                 alt={item.title} 
-                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 filter brightness-[0.85] md:brightness-[0.7]"
+                className="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105 filter brightness-[0.95] md:brightness-[0.9] group-hover:brightness-[0.75]"
                 loading="lazy"
               />
 
@@ -120,11 +120,11 @@ export default function PhotoGallery() {
               <div className="absolute inset-0 border border-neutral-900/40 rounded-2xl pointer-events-none" />
 
               {/* 
-                Text & Link Overlay: 
-                - bg-gradient-to-t creates the dark gradient backing from the bottom up to protect the text
-                - Removed "sm:opacity-0" and "group-hover:opacity-100" so it is fully visible on all devices
+                Text & Link Overlay with Lighter Bottom-up Gradient Protection:
+                - Reduced bottom color to black/75 (down from 95)
+                - Reduced middle transition to black/20 (down from 50)
               */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent p-6 flex flex-col justify-end transition-all duration-500 ease-out">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent p-6 flex flex-col justify-end transition-all duration-500 ease-out">
                 <div>
                   <span 
                     className="text-[10px] font-bold tracking-wider uppercase px-2 py-1 rounded bg-neutral-900/80 border border-neutral-800/60 inline-block mb-3"
