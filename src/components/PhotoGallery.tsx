@@ -10,6 +10,13 @@ const colors = {
 // --- Easily drop your Cloudinary image links here ---
 // Keep 'f_auto,q_auto,w_800' in your URLs for blazing-fast loading!
 const galleryItems = [
+  
+  {
+    title: "Studio Portraits",
+    description: "Official executive headshot for leadership panels.",
+    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285393/IMG_0016_z3ccvn.jpg",
+    link: "#",
+  },
   {
     title: "Speaking at Events",
     description: "Keynote address on healthcare automation frameworks.",
@@ -23,27 +30,9 @@ const galleryItems = [
     link: "#",
   },
   {
-    title: "Startup Meetings",
-    description: "Strategic scaling sessions with the MedxLearn core team.",
-    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg",
-    link: "#",
-  },
-  {
     title: "Conferences",
     description: "Exchanging digital health architecture breakthroughs with MedxVerse OAU Campus.",
     imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285694/IMG-20260418-WA0070_ok5mtk.jpg",
-    link: "#",
-  },
-  {
-    title: "Community Outreach",
-    description: "Democratizing medical access and health education protocols.",
-    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg",
-    link: "#",
-  },
-  {
-    title: "Studio Portraits",
-    description: "Official executive headshot for leadership panels.",
-    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285393/IMG_0016_z3ccvn.jpg",
     link: "#",
   },
 ];
