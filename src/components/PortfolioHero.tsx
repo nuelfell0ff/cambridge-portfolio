@@ -60,7 +60,7 @@ export default function PortfolioHero() {
 
   return (
     <section
-      className="min-h-screen text-white flex flex-col justify-between pt-24 md:pt-28 relative overflow-hidden"
+      className="w-full text-white flex flex-col pt-20 md:pt-24 relative overflow-hidden h-auto"
       style={{
         backgroundColor: colors.bgDark,
         fontFamily: "'Poppins', sans-serif",
@@ -77,8 +77,8 @@ export default function PortfolioHero() {
       {/* --- Responsive Fixed Navbar --- */}
       <Navbar colors={colors} />
 
-      {/* --- Hero Grid Section (Now matched exactly to max-w-7xl structure of the Navbar) --- */}
-      <main className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full px-6 md:px-12 py-28 md:py-40 z-10">
+      {/* --- Hero Grid Section (Vertical Spacing Tightened from py-28/md:py-40 down to py-12/md:py-16) --- */}
+      <main className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full px-6 md:px-12 py-12 md:py-16 z-10">
         
         {/* Left Column: Text & CTAs */}
         <motion.div
@@ -147,7 +147,7 @@ export default function PortfolioHero() {
           className="md:col-span-5 lg:col-span-6 w-full flex justify-center md:justify-end"
         >
           {/* Sizing is scaled dynamically to expand slightly more on wider desktops (lg:max-w-[460px]) */}
-          <div className="relative w-full max-w-[380px] lg:max-w-[460px] aspect-[4/5] rounded-2xl overflow-hidden border border-neutral-800/80 bg-neutral-900/20 backdrop-blur-sm p-3 shadow-2xl group">
+          <div className="relative w-full max-w-[340px] lg:max-w-[420px] aspect-[4/5] rounded-2xl overflow-hidden border border-neutral-800/80 bg-neutral-900/20 backdrop-blur-sm p-3 shadow-2xl group">
             
             {/* Subtle inner container glow */}
             <div 
