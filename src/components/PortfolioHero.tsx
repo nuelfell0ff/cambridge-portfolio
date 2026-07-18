@@ -1,22 +1,74 @@
 "use client";
-import React from 'react';
-import PortfolioHero from '@/components/PortfolioHero';
-import ProfessionalHeadline from '@/components/ProfessionalHeadline'; // New Import
-import About from '@/components/About';
-import FeaturedCompanies from '@/components/FeaturedCompanies';
-import PhotoGallery from '@/components/PhotoGallery';
+import React, { useEffect } from 'react';
+import { motion, useAnimation, Variants } from 'framer-motion';
+import Navbar from '@/components/Navbar';
+import Image from 'next/image';
 
-export default function Home() {
+// Defined colors matching the professional medical blue theme
+const colors = {
+  blue: '#193A60', 
+  green: '#1F7299', // Swapped out original green for the medical blue highlight
+  accentGreen: '#1F7299', // Swapped out accent green
+  textWhite: '#FFFFFF',
+  bgDark: '#0a0806',
+};
+
+// SVG Icon Components for Footer (using new medical blue highlight)
+const Icon = ({ path }: { path: string }) => (
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke={colors.accentGreen}
+    strokeWidth="2.5"
+    viewBox="0 0 24 24"
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" d={path} />
+  </svg>
+);
+
+const crossPath = "M12 4.5v15m7.5-7.5h-15"; // Simple cross
+
+// Animation Variants
+const fadeInUp: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.1, duration: 0.7, ease: [0.215, 0.61, 0.355, 1] }
+  })
+};
+
+const fadeInRight: Variants = {
+  hidden: { opacity: 0, x: 40 },
+  visible: { 
+    opacity: 1, 
+    x: 0, 
+    transition: { delay: 0.3, duration: 0.8, ease: [0.215, 0.61, 0.355, 1] } 
+  }
+};
+
+export default function PortfolioHero() {
+  const controls = useAnimation();
+
+  useEffect(() => {
+    // Inject Poppins font link
+    const link = document.createElement('link');
+    link.href = 'https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap';
+    link.rel = 'stylesheet';
+    document.head.appendChild(link);
+    controls.start("visible");
+  }, [controls]);
+
   return (
-    <div
-      // pt-24 md:pt-28 acts as a buffer container so content starts cleanly below the fixed navbar
+    <section
+      // Changed to a semantic <section> with relative layout to act as a proper hero fold
       className="min-h-screen text-white flex flex-col justify-between px-6 pb-6 md:px-12 md:pb-12 pt-24 md:pt-28 relative overflow-hidden"
       style={{
         backgroundColor: colors.bgDark,
         fontFamily: "'Poppins', sans-serif",
       }}
     >
-      {/* Subtle background glow - matching the new green color */}
+      {/* Subtle background glow - matching the new medical blue color */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
@@ -30,13 +82,13 @@ export default function Home() {
       {/* --- Hero Grid Section --- */}
       <main className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full py-12 md:py-16 z-10">
         
-        {/* Left Column: Text & CTAs */}
+        {/* Left Column: Text & CTAs (Centered on mobile, left-aligned on desktop) */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
           custom={1}
-          className="md:col-span-7 flex flex-col justify-center"
+          className="md:col-span-7 flex flex-col justify-center items-center md:items-start text-center md:text-left"
         >
           {/* Subtle Overline Tag */}
           <span 
@@ -46,26 +98,26 @@ export default function Home() {
             The Future of Health is AI-Driven
           </span>
 
-          {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight max-w-2xl">
+          {/* Main Heading (Larger text-5xl base on mobile) */}
+          <h1 className="text-5xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight max-w-2xl">
             Timilehin Seyi <br />
             <span style={{ color: colors.green }}>Ogunsakin</span>
           </h1>
 
-          {/* Subtitle Roles */}
-          <p className="mt-6 text-neutral-400 text-sm sm:text-base max-w-xl font-light leading-relaxed">
+          {/* Subtitle Roles (Slightly larger base text sizing on mobile) */}
+          <p className="mt-6 text-neutral-400 text-base sm:text-base max-w-xl font-light leading-relaxed">
             Founder <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
             Healthcare Technology Entrepreneur <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
             Medical Student <span className="mx-1 sm:mx-2 text-neutral-600">|</span> <br className="hidden sm:inline" />
             AI & Digital Health Innovator
           </p>
 
-          {/* Call to Actions */}
-          <div className="mt-8 flex flex-wrap gap-4">
+          {/* Call to Actions (Equally sized, centered, stacked cleanly on mobile) */}
+          <div className="mt-8 flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 w-full max-w-md sm:max-w-none">
             <button
-              className="text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center gap-2 transition-all shadow-lg"
+              className="w-full sm:w-auto text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
               style={{ backgroundColor: colors.accentGreen }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = colors.green}
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#15526f'} // Darker shade of medical blue for hover
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
             >
               Schedule a Meeting
@@ -81,7 +133,7 @@ export default function Home() {
             </button>
 
             <button
-              className="border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all"
+              className="w-full sm:w-auto border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all text-center flex items-center justify-center"
               style={{ backgroundColor: `rgba(25, 58, 96, 0.15)` }}
             >
               View Portfolio
@@ -108,18 +160,22 @@ export default function Home() {
 
             {/* Image Placeholder */}
             <img 
-              src="/IMG_0015.jpg" 
-              alt="Timilehin Seyi Ogunsakin" 
-              className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  const fallback = document.getElementById('image-fallback');
-                  if (fallback) fallback.style.display = 'flex';
-                }
-              }}
-            />
+  src="https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg"
+  alt="Timilehin Seyi Ogunsakin" 
+  className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
+  // Tells the browser to prioritize loading this image immediately (since it's above the fold)
+  fetchPriority="high" 
+  loading="eager"
+  onError={(e) => {
+    e.currentTarget.style.display = 'none';
+    const parent = e.currentTarget.parentElement;
+    if (parent) {
+      const fallback = document.getElementById('image-fallback');
+      if (fallback) fallback.style.display = 'flex';
+    }
+  }}
+/>
+
 
             {/* Beautiful Graphic Fallback */}
             <div 
@@ -139,39 +195,7 @@ export default function Home() {
         </motion.div>
 
       </main>
-
-      {/* --- Footer Highlights Grid --- */}
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={2}
-        className="w-full max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-8 border-t border-neutral-900/50 z-10"
-      >
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Founder</h4>
-          <p className="text-xs text-neutral-400">MedxLearn</p>
-        </div>
-
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">AI Innovator</h4>
-          <p className="text-xs text-neutral-400">Deep Learning</p>
-        </div>
-
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Health Tech Leader</h4>
-          <p className="text-xs text-neutral-400">Systems Strategy</p>
-        </div>
-
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Digital Visionary</h4>
-          <p className="text-xs text-neutral-400">Future Ecosystems</p>
-        </div>
-      </motion.section>
-    </div>
+    </section>
   );
-}
+        }
+              
