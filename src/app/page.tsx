@@ -1,177 +1,40 @@
 "use client";
 import React from 'react';
 import PortfolioHero from '@/components/PortfolioHero';
-import ProfessionalHeadline from '@/components/ProfessionalHeadline'; // New Import
+import ProfessionalHeadline from '@/components/ProfessionalHeadline';
 import About from '@/components/About';
 import FeaturedCompanies from '@/components/FeaturedCompanies';
 import PhotoGallery from '@/components/PhotoGallery';
+import VisionStatement from '@/components/VisionStatement';
+
+// Define the colors object here so the selection bar or any page-level styles can safely read it!
+const colors = {
+  bgDark: '#0a0806',
+  green: '#1F7299',
+};
 
 export default function Home() {
   return (
-    <div
-      // pt-24 md:pt-28 acts as a buffer container so content starts cleanly below the fixed navbar
-      className="min-h-screen text-white flex flex-col justify-between px-6 pb-6 md:px-12 md:pb-12 pt-24 md:pt-28 relative overflow-hidden"
-      style={{
-        backgroundColor: colors.bgDark,
-        fontFamily: "'Poppins', sans-serif",
-      }}
+    <main 
+      className="text-white min-h-screen overflow-y-auto selection:bg-[#1F7299]/30"
+      style={{ backgroundColor: colors.bgDark }} // This was likely causing the crash if colors was missing!
     >
-      {/* Subtle background glow - matching the new green color */}
-      <div 
-        className="absolute inset-0 z-0 pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(circle at 85% 45%, ${colors.green}15 0%, transparent 55%)`
-        }}
-      />
+      {/* 1. Hero Fold */}
+      <PortfolioHero />
+      
+      {/* 2. Professional Headline Section */}
+      <ProfessionalHeadline />
+      
+      {/* 3. Biography Section */}
+      <About />
 
-      {/* --- Responsive Fixed Navbar --- */}
-      <Navbar colors={colors} />
+      {/* 4. Ventures / Companies Grid */}
+      <FeaturedCompanies />
 
-      {/* --- Hero Grid Section --- */}
-      <main className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full py-12 md:py-16 z-10">
-        
-        {/* Left Column: Text & CTAs */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          custom={1}
-          className="md:col-span-7 flex flex-col justify-center"
-        >
-          {/* Subtle Overline Tag */}
-          <span 
-            className="text-[11px] font-bold tracking-[0.25em] uppercase mb-4"
-            style={{ color: colors.accentGreen }}
-          >
-            The Future of Health is AI-Driven
-          </span>
+      {/* 5. Photos Section */}
+      <PhotoGallery />
 
-          {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight max-w-2xl">
-            Timilehin Seyi <br />
-            <span style={{ color: colors.green }}>Ogunsakin</span>
-          </h1>
-
-          {/* Subtitle Roles */}
-          <p className="mt-6 text-neutral-400 text-sm sm:text-base max-w-xl font-light leading-relaxed">
-            Founder <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
-            Healthcare Technology Entrepreneur <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
-            Medical Student <span className="mx-1 sm:mx-2 text-neutral-600">|</span> <br className="hidden sm:inline" />
-            AI & Digital Health Innovator
-          </p>
-
-          {/* Call to Actions */}
-          <div className="mt-8 flex flex-wrap gap-4">
-            <button
-              className="text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center gap-2 transition-all shadow-lg"
-              style={{ backgroundColor: colors.accentGreen }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = colors.green}
-              onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
-            >
-              Schedule a Meeting
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-              </svg>
-            </button>
-
-            <button
-              className="border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all"
-              style={{ backgroundColor: `rgba(25, 58, 96, 0.15)` }}
-            >
-              View Portfolio
-            </button>
-          </div>
-        </motion.div>
-
-        {/* Right Column: Image Container */}
-        <motion.div
-          initial="hidden"
-          animate="visible"
-          variants={fadeInRight}
-          className="md:col-span-5 w-full flex justify-center md:justify-end"
-        >
-          <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-2xl overflow-hidden border border-neutral-800/80 bg-neutral-900/20 backdrop-blur-sm p-3 shadow-2xl group">
-            
-            {/* Subtle inner container glow */}
-            <div 
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-              style={{
-                backgroundImage: `radial-gradient(circle at 50% 50%, ${colors.accentGreen}10 0%, transparent 70%)`
-              }}
-            />
-
-            {/* Image Placeholder */}
-            <img 
-              src="/IMG_0015.jpg" 
-              alt="Timilehin Seyi Ogunsakin" 
-              className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  const fallback = document.getElementById('image-fallback');
-                  if (fallback) fallback.style.display = 'flex';
-                }
-              }}
-            />
-
-            {/* Beautiful Graphic Fallback */}
-            <div 
-              id="image-fallback" 
-              className="hidden absolute inset-3 rounded-xl flex-col items-center justify-center border border-dashed border-neutral-800 bg-neutral-950/50"
-            >
-              <div 
-                className="w-12 h-12 rounded-full flex items-center justify-center mb-3 animate-pulse"
-                style={{ backgroundColor: `${colors.green}20` }}
-              >
-                <Icon path={crossPath} />
-              </div>
-              <span className="text-xs text-neutral-500 font-medium">Insert Image Here</span>
-            </div>
-
-          </div>
-        </motion.div>
-
-      </main>
-
-      {/* --- Footer Highlights Grid --- */}
-      <motion.section
-        initial="hidden"
-        animate="visible"
-        variants={fadeInUp}
-        custom={2}
-        className="w-full max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 pt-8 border-t border-neutral-900/50 z-10"
-      >
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Founder</h4>
-          <p className="text-xs text-neutral-400">MedxLearn</p>
-        </div>
-
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">AI Innovator</h4>
-          <p className="text-xs text-neutral-400">Deep Learning</p>
-        </div>
-
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Health Tech Leader</h4>
-          <p className="text-xs text-neutral-400">Systems Strategy</p>
-        </div>
-
-        <div className="flex flex-col space-y-1">
-          <Icon path={crossPath} />
-          <h4 className="text-sm font-semibold text-neutral-200">Digital Visionary</h4>
-          <p className="text-xs text-neutral-400">Future Ecosystems</p>
-        </div>
-      </motion.section>
-    </div>
+      <VisionStatement />
+    </main>
   );
 }

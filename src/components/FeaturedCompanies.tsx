@@ -32,7 +32,7 @@ const companies = [
     description: "An agile healthcare logistics platform built to mobilize medical supplies and quick-response support teams efficiently.",
     mission: "To streamline clinical operations and secure immediate resource dispatch during critical times.",
     impact: "Creating reliable channels for on-demand medical logistics and localized diagnostic support.",
-    link: "https://medxgo.com", // Replace with actual link
+    link: "https://medxgoapp.com", // Replace with actual link
   },
 ];
 

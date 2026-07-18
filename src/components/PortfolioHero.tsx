@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { motion, useAnimation, Variants } from 'framer-motion';
 import Navbar from '@/components/Navbar';
-import Image from 'next/image';
 
 // Defined colors matching the professional medical blue theme
 const colors = {
@@ -61,14 +60,13 @@ export default function PortfolioHero() {
 
   return (
     <section
-      // Changed to a semantic <section> with relative layout to act as a proper hero fold
-      className="min-h-screen text-white flex flex-col justify-between px-6 pb-6 md:px-12 md:pb-12 pt-24 md:pt-28 relative overflow-hidden"
+      className="min-h-screen text-white flex flex-col justify-between pt-24 md:pt-28 relative overflow-hidden"
       style={{
         backgroundColor: colors.bgDark,
         fontFamily: "'Poppins', sans-serif",
       }}
     >
-      {/* Subtle background glow - matching the new medical blue color */}
+      {/* Background Decorative Element */}
       <div 
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
@@ -79,16 +77,16 @@ export default function PortfolioHero() {
       {/* --- Responsive Fixed Navbar --- */}
       <Navbar colors={colors} />
 
-      {/* --- Hero Grid Section --- */}
-      <main className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full py-12 md:py-16 z-10">
+      {/* --- Hero Grid Section (Now matched exactly to max-w-7xl structure of the Navbar) --- */}
+      <main className="flex-1 grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full px-6 md:px-12 py-28 md:py-40 z-10">
         
-        {/* Left Column: Text & CTAs (Centered on mobile, left-aligned on desktop) */}
+        {/* Left Column: Text & CTAs */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInUp}
           custom={1}
-          className="md:col-span-7 flex flex-col justify-center items-center md:items-start text-center md:text-left"
+          className="md:col-span-7 lg:col-span-6 flex flex-col justify-center items-center md:items-start text-center md:text-left"
         >
           {/* Subtle Overline Tag */}
           <span 
@@ -98,13 +96,13 @@ export default function PortfolioHero() {
             The Future of Health is AI-Driven
           </span>
 
-          {/* Main Heading (Larger text-5xl base on mobile) */}
+          {/* Main Heading */}
           <h1 className="text-5xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight max-w-2xl">
             Timilehin Seyi <br />
             <span style={{ color: colors.green }}>Ogunsakin</span>
           </h1>
 
-          {/* Subtitle Roles (Slightly larger base text sizing on mobile) */}
+          {/* Subtitle Roles */}
           <p className="mt-6 text-neutral-400 text-base sm:text-base max-w-xl font-light leading-relaxed">
             Founder <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
             Healthcare Technology Entrepreneur <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
@@ -112,12 +110,12 @@ export default function PortfolioHero() {
             AI & Digital Health Innovator
           </p>
 
-          {/* Call to Actions (Equally sized, centered, stacked cleanly on mobile) */}
+          {/* Call to Actions */}
           <div className="mt-8 flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 w-full max-w-md sm:max-w-none">
             <button
               className="w-full sm:w-auto text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
               style={{ backgroundColor: colors.accentGreen }}
-              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#15526f'} // Darker shade of medical blue for hover
+              onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#15526f'} 
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
             >
               Schedule a Meeting
@@ -141,14 +139,15 @@ export default function PortfolioHero() {
           </div>
         </motion.div>
 
-        {/* Right Column: Image Container */}
+        {/* Right Column: Expanded Image Container */}
         <motion.div
           initial="hidden"
           animate="visible"
           variants={fadeInRight}
-          className="md:col-span-5 w-full flex justify-center md:justify-end"
+          className="md:col-span-5 lg:col-span-6 w-full flex justify-center md:justify-end"
         >
-          <div className="relative w-full max-w-[400px] aspect-[4/5] rounded-2xl overflow-hidden border border-neutral-800/80 bg-neutral-900/20 backdrop-blur-sm p-3 shadow-2xl group">
+          {/* Sizing is scaled dynamically to expand slightly more on wider desktops (lg:max-w-[460px]) */}
+          <div className="relative w-full max-w-[380px] lg:max-w-[460px] aspect-[4/5] rounded-2xl overflow-hidden border border-neutral-800/80 bg-neutral-900/20 backdrop-blur-sm p-3 shadow-2xl group">
             
             {/* Subtle inner container glow */}
             <div 
@@ -158,24 +157,22 @@ export default function PortfolioHero() {
               }}
             />
 
-            {/* Image Placeholder */}
+            {/* Image Component */}
             <img 
-  src="https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg"
-  alt="Timilehin Seyi Ogunsakin" 
-  className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
-  // Tells the browser to prioritize loading this image immediately (since it's above the fold)
-  fetchPriority="high" 
-  loading="eager"
-  onError={(e) => {
-    e.currentTarget.style.display = 'none';
-    const parent = e.currentTarget.parentElement;
-    if (parent) {
-      const fallback = document.getElementById('image-fallback');
-      if (fallback) fallback.style.display = 'flex';
-    }
-  }}
-/>
-
+              src="https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg"
+              alt="Timilehin Seyi Ogunsakin" 
+              className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
+              fetchPriority="high" 
+              loading="eager"
+              onError={(e) => {
+                e.currentTarget.style.display = 'none';
+                const parent = e.currentTarget.parentElement;
+                if (parent) {
+                  const fallback = document.getElementById('image-fallback');
+                  if (fallback) fallback.style.display = 'flex';
+                }
+              }}
+            />
 
             {/* Beautiful Graphic Fallback */}
             <div 
@@ -197,5 +194,4 @@ export default function PortfolioHero() {
       </main>
     </section>
   );
-        }
-              
+}
