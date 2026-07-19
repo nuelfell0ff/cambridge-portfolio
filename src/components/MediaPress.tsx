@@ -14,57 +14,57 @@ const categories = ["All", "Interviews", "Podcasts", "Articles", "TV & Radio", "
 const pressItems = [
   {
     id: 1,
-    category: "Interviews",
-    title: "AI and the Sovereign Future of African Healthcare Infrastructure",
-    source: "TechCabal",
-    date: "June 2026",
-    link: "#",
-    type: "Read Interview"
+    category: "Article",
+    title: "MedxGo to Launch Food, Medication and Logistics Platform Across South-West Nigeria and Kwara State",
+    source: "Legit mg",
+    date: "March 2026",
+    link: "https://www.legit.ng/nigeria/1699954-medxgo-launches-food-medication-logistics-platform-south-west-nigeria-kwara/",
+    type: "Read More"
   },
   {
     id: 2,
-    category: "Podcasts",
-    title: "Balancing Medicine and Technology Entrepreneurship in Africa",
-    source: "The Venture Labs Podcast",
-    date: "May 2026",
-    link: "#",
-    type: "Listen Now"
+    category: "Article",
+    title: "MedxGo Emerges Africa’s Next Technology-driven Solution For Food, Medication, Logistics Delivery",
+    source: "Independent Newspapers",
+    date: "June 2026",
+    link: "https://independent.ng/breaking-medxgo-emerges-africas-next-technology-driven-solution-for-food-medication-logistics-delivery/",
+    type: "Read Article"
   },
   {
     id: 3,
-    category: "TV & Radio",
-    title: "Live: Transforming Clinical Diagnosis with Machine Learning Systems",
-    source: "CNBC Africa",
-    date: "March 2026",
-    link: "#",
-    type: "Watch Appearance"
+    category: "Article",
+    title: "How MedxVerse Is Using AI, Telemedicine To Expand Healthcare Access Across Nigeria, Africa",
+    source: "Independent Newspapers",
+    date: "June 2026",
+    link: "https://independent.ng/how-medxverse-is-using-ai-telemedicine-to-expand-healthcare-access-across-nigeria-africa/",
+    type: "Read More"
   },
   {
     id: 4,
-    category: "Articles",
-    title: "How Digital Health Innovators are Rewriting the Medical Curriculum",
-    source: "BusinessDay",
-    date: "Jan 2026",
-    link: "#",
+    category: "Article",
+    title: "MedxVerse unveils telemedicine platform to expand healthcare access in Africa",
+    source: "The Sun",
+    date: "March 2026",
+    link: "https://thesun.ng/medxverse-unveils-telemedicine-platform-to-expand-healthcare-access-in-africa/",
     type: "Read Article"
   },
   {
     id: 5,
-    category: "Features",
-    title: "Top Innovators Transforming the African Continent's Tech Landscape",
-    source: "Forbes Africa Magazine",
-    date: "Nov 2025",
-    link: "#",
-    type: "View Feature"
+    category: "Watch",
+    title: "MedxGo Official Introduction | Food & Medication Delivery Made Easy",
+    source: "YouTube",
+    date: "July 2026",
+    link: "https://youtube.com/watch?v=eFV2Bw20rxg&si=8IGom9sSxZ87cs66",
+    type: "Watch Now"
   },
   {
     id: 6,
-    category: "Features",
-    title: "Official Press Release: Announcing Next-Gen Medical Learning Platform Deployment",
-    source: "Digital Health Press",
-    date: "Sept 2025",
-    link: "#",
-    type: "Read Release"
+    category: "Watch",
+    title: "Introducing Lexi AI",
+    source: "YouTube",
+    date: "April 2026",
+    link: "https://youtube.com/shorts/OcLQkeyNK4c?si=IqFB-P1bNh6I2Vr_",
+    type: "Watch Now"
   }
 ];
 
