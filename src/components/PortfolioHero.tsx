@@ -106,7 +106,7 @@ export default function PortfolioHero() {
           <p className="mt-6 text-neutral-400 text-base sm:text-base max-w-xl font-light leading-relaxed">
             Founder <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
             Healthcare Technology Entrepreneur <span className="mx-1 sm:mx-2 text-neutral-600">|</span>
-            Medical Student <span className="mx-1 sm:mx-2 text-neutral-600">|</span> <br className="hidden sm:inline" />
+            Medical Professional <span className="mx-1 sm:mx-2 text-neutral-600">|</span> <br className="hidden sm:inline" />
             AI & Digital Health Innovator
           </p>
 
