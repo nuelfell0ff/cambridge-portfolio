@@ -16,7 +16,7 @@ const pressItems = [
     id: 1,
     category: "Article",
     title: "MedxGo to Launch Food, Medication and Logistics Platform Across South-West Nigeria and Kwara State",
-    source: "Legit mg",
+    source: "Legit",
     date: "March 2026",
     link: "https://www.legit.ng/nigeria/1699954-medxgo-launches-food-medication-logistics-platform-south-west-nigeria-kwara/",
     type: "Read More"
