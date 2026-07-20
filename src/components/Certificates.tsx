@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 
 // Consistent application design theme colors
 const colors = {
@@ -32,8 +32,8 @@ const CERTIFICATES = [
   { title: "Data Governance & Quality for Better Business Decisions", issuer: "Data Governance Board" },
 ];
 
-// Animation presets
-const containerVariants = {
+// Animation presets explicitly typed to satisfy Next.js TS compiler
+const containerVariants: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -41,12 +41,15 @@ const containerVariants = {
   }
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.215, 0.61, 0.355, 1] }
+    transition: { 
+      duration: 0.5, 
+      ease: [0.215, 0.61, 0.355, 1] as const // Fixed: Added 'as const' to assure TS it is a fixed easing tuple
+    }
   }
 };
 
@@ -141,5 +144,5 @@ export default function CertificatesSection() {
       </div>
     </section>
   );
-            }
-                    
+  }
+          
