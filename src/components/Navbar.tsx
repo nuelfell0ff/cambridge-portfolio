@@ -10,6 +10,7 @@ interface NavbarProps {
     textWhite: string;
     bgDark: string;
   };
+  bookingUrl?: string;
 }
 
 const fadeInDown: Variants = {
@@ -26,7 +27,11 @@ const navItems = [
   { id: 'testimonials', label: 'Testimonials' },
 ];
 
-export default function Navbar({ colors }: NavbarProps) {
+// Added your Calendly link as the default fallback
+export default function Navbar({ 
+  colors, 
+  bookingUrl = "https://calendly.com/cambridgeprakash/30min" 
+}: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
 
@@ -149,15 +154,18 @@ export default function Navbar({ colors }: NavbarProps) {
           })}
         </div>
 
-        {/* Desktop CTA Button */}
-        <button
-          className="hidden md:block text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-all shadow-md"
+        {/* Desktop CTA Button Link */}
+        <a
+          href={bookingUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hidden md:block text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-all shadow-md text-center select-none"
           style={{ backgroundColor: colors.green }}
           onMouseOver={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
           onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.green}
         >
           Get in Touch
-        </button>
+        </a>
 
         {/* Mobile Hamburger Button */}
         <button
@@ -210,15 +218,21 @@ export default function Navbar({ colors }: NavbarProps) {
               );
             })}
             
-            <button
-              className="text-white font-medium w-full py-3 rounded-lg text-sm transition-all text-center mt-2 shadow-md"
+            {/* Mobile CTA Button Link */}
+            <a
+              href={bookingUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setIsOpen(false)}
+              className="text-white font-medium w-full py-3 rounded-lg text-sm transition-all text-center mt-2 shadow-md block select-none"
               style={{ backgroundColor: colors.green }}
             >
               Get in Touch
-            </button>
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.header>
   );
-}
+      }
+        
