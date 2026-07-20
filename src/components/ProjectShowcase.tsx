@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, ArrowUpRight } from 'lucide-react';
 
 interface ProductItem {
   id: string;
@@ -120,13 +119,12 @@ export default function ProjectShowcase() {
       {/* Responsive Grid Layout */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {PRODUCTS_DATA.map((product, index) => {
-          // Dynamic CSS scoping rules to enforce initial limits (4 for mobile, 6 for desktop)
           let visibilityClass = 'block';
           if (!isExpanded) {
             if (index >= 4 && index < 6) {
-              visibilityClass = 'hidden lg:block'; // Hidden on mobile/tablet, shown on desktop
+              visibilityClass = 'hidden lg:block';
             } else if (index >= 6) {
-              visibilityClass = 'hidden'; // Fully cut off initially
+              visibilityClass = 'hidden';
             }
           }
 
@@ -158,7 +156,11 @@ export default function ProjectShowcase() {
                     className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                     aria-label={`Open ${product.title}`}
                   >
-                    <ArrowUpRight className="w-4 h-4" />
+                    {/* Inline SVG for ArrowUpRight */}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
                   </a>
                 </div>
                 <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
@@ -179,16 +181,22 @@ export default function ProjectShowcase() {
           {isExpanded ? (
             <>
               Show Less
-              <ChevronUp className="w-4 h-4" />
+              {/* Inline SVG for ChevronUp */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                <polyline points="18 15 12 9 6 15"></polyline>
+              </svg>
             </>
           ) : (
             <>
               See More
-              <ChevronDown className="w-4 h-4" />
+              {/* Inline SVG for ChevronDown */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
             </>
           )}
         </button>
       </div>
     </section>
   );
-    }
+              }
