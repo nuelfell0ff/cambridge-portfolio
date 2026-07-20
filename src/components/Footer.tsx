@@ -4,39 +4,30 @@ import { motion } from 'framer-motion';
 
 // 1. Configuration Constants (Kept safely outside the component scope)
 const FOOTER_COLORS = {
-  blue: '#193A60', 
-  green: '#1F7299', 
+  blue: '#193A60',
+  green: '#1F7299',
   bgDark: '#0a0806',
 };
 
 const SITEMAP_GROUPS = [
   {
-    title: "Contact & Inquiries",
+    title: "Navigation",
     links: [
-      { name: "Business Inquiry Form", href: "#" },
-      { name: "Speaking Requests", href: "#" },
-      { name: "Partnership Inquiries", href: "#" },
-      { name: "Investor Contact", href: "#" },
-      { name: "Media Requests", href: "#" },
+      { name: "Home", href: "#home" },
+      { name: "About", href: "#about" },
+      { name: "Companies", href: "#companies" },
+      { name: "Gallery", href: "#gallery" },
+      { name: "Press & Media", href: "#press" },
+      { name: "Testimonials", href: "#testimonials" },
     ]
   },
   {
-    title: "Book & Consult",
+    title: "Engage & Consult",
     links: [
-      { name: "Speaking Engagements", href: "#" },
-      { name: "Advisory Sessions", href: "#" },
-      { name: "Media Interviews", href: "#" },
-      { name: "Startup Consultations", href: "#" },
-    ]
-  },
-  {
-    title: "Common Questions",
-    links: [
-      { name: "Speaking FAQ", href: "#" },
-      { name: "Collaborations FAQ", href: "#" },
-      { name: "Startups FAQ", href: "#" },
-      { name: "Research FAQ", href: "#" },
-      { name: "Mentorship FAQ", href: "#" },
+      { name: "Advisory & Strategy", href: "#" },
+      { name: "Speaking & Panels", href: "#" },
+      { name: "Partnership Openings", href: "#" },
+      { name: "General FAQ", href: "#" },
     ]
   }
 ];
@@ -51,17 +42,16 @@ const SOCIAL_PROFILES = [
 
 const LEGAL_LINKS = ["Privacy Policy", "Terms of Use", "Cookie Policy", "Accessibility Statement"];
 
-// 2. Main Functional Component
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer 
+    <footer
       className="w-full text-white px-6 md:px-12 pt-20 pb-8 relative overflow-hidden border-t border-neutral-900/40"
       style={{ backgroundColor: FOOTER_COLORS.bgDark, fontFamily: "'Poppins', sans-serif" }}
     >
       {/* Background Neon Accent Glow */}
-      <div 
+      <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `radial-gradient(circle at 10% 90%, ${FOOTER_COLORS.blue}15 0%, transparent 50%)`
@@ -69,24 +59,27 @@ export default function Footer() {
       />
 
       <div className="max-w-7xl mx-auto w-full z-10 relative">
-        
+
         {/* --- Top Layout Grid --- */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-12 gap-x-10 gap-y-12 pb-16 border-b border-neutral-900/60 mb-12">
-          
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-10 gap-y-12 pb-16 border-b border-neutral-900/60 mb-12">
+
           {/* Brand Profile Information */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-3 flex flex-col items-start gap-4">
-            <motion.div 
+          <div className="sm:col-span-2 lg:col-span-4 flex flex-col items-start gap-4">
+            <motion.div
               className="flex items-center space-x-3"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
             >
-              <div className="w-9 h-9 rounded-md flex items-center justify-center border border-neutral-800" style={{ backgroundColor: `${FOOTER_COLORS.blue}20` }}>
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: FOOTER_COLORS.green }} />
+              <div
+                className="w-8 h-8 md:w-10 md:h-10 rounded-sm transition-transform duration-300 group-hover:rotate-12 flex items-center justify-center font-bold text-xs md:text-sm text-white shadow-inner"
+                style={{ backgroundColor: FOOTER_COLORS.green }}
+              >
+                TO
               </div>
               <span className="text-xl font-semibold tracking-tight">T. Seyi Ogunsakin</span>
             </motion.div>
-            
+
             <p className="text-neutral-400 text-xs font-light leading-relaxed max-w-sm">
               Healthcare Technology Entrepreneur & Medical Innovator leveraging computational systems to solve frontier global health challenges.
             </p>
@@ -98,16 +91,16 @@ export default function Footer() {
               </span>
               <span className="flex items-center gap-2.5">
                 <svg className="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" /><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" /></svg>
-                Cambridge, United Kingdom
+                Lagos, Nigeria
               </span>
             </div>
           </div>
 
-          {/* Interactive Navigation Link Collections */}
+          {/* Interactive Navigation Link Collections (Balanced Across 2 Remaining Large-Screen Areas) */}
           {SITEMAP_GROUPS.map((group, groupIdx) => (
-            <motion.div 
+            <motion.div
               key={groupIdx}
-              className="lg:col-span-3 flex flex-col gap-5"
+              className="sm:col-span-1 lg:col-span-4 flex flex-col gap-5"
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -119,8 +112,8 @@ export default function Footer() {
               <ul className="flex flex-col gap-3.5">
                 {group.links.map((link, linkIdx) => (
                   <li key={linkIdx}>
-                    <a 
-                      href={link.href} 
+                    <a
+                      href={link.href}
                       className="group flex items-center gap-2 text-[13px] text-neutral-400 font-light hover:text-white transition-colors"
                     >
                       <span className="transition-transform group-hover:translate-x-0.5">{link.name}</span>
@@ -137,15 +130,14 @@ export default function Footer() {
 
         {/* --- Bottom Base Row (Legal Information & Social Interfaces) --- */}
         <div className="flex flex-col-reverse md:flex-row md:items-center md:justify-between gap-8">
-          
-          <motion.div 
+          <motion.div
             className="flex flex-col sm:flex-row sm:items-center gap-x-6 gap-y-3 text-xs text-neutral-600 font-light"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
             <span>&copy; {currentYear} Timilehin Ogunsakin.</span>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
               {LEGAL_LINKS.map((link) => (
                 <a key={link} href="#" className="hover:text-neutral-400 transition-colors">
                   {link}
@@ -154,7 +146,7 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="flex items-center gap-5"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -162,13 +154,13 @@ export default function Footer() {
             transition={{ duration: 0.6 }}
           >
             {SOCIAL_PROFILES.map((link, idx) => (
-              <a 
-                key={idx} 
-                href={link.href} 
-                aria-label={`Visit professional ${link.name} profile`} 
+              <a
+                key={idx}
+                href={link.href}
+                aria-label={`Visit professional ${link.name} profile`}
                 className="group relative flex items-center justify-center w-8 h-8 rounded-full border border-neutral-800 bg-neutral-950 transition-all hover:border-neutral-700 hover:bg-neutral-900 active:scale-95 shadow-sm"
               >
-                <div 
+                <div
                   className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity rounded-full pointer-events-none"
                   style={{
                     backgroundImage: `radial-gradient(circle at 50% 50%, ${FOOTER_COLORS.green}15 0%, transparent 70%)`
@@ -185,4 +177,4 @@ export default function Footer() {
       </div>
     </footer>
   );
-   }
+}

@@ -11,28 +11,27 @@ const colors = {
 const companies = [
   {
     name: "MedxLearn",
-    // Replace with your Cloudinary image link. Keep 'f_auto,q_auto' to load lightning-fast!
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784284283/SAVE_20260717_113050_dpq3jv.jpg", 
-    description: "A digital medical education ecosystem bridging the gap between theoretical classroom learning and modern clinical practice.",
-    mission: "To revolutionize healthcare training by putting interactive, high-yield digital learning directly into the hands of medical students globally.",
-    impact: "Empowering thousands of healthcare students with accessible clinical education resource hubs.",
-    link: "https://medxlearnapp.com", // Replace with actual link
+    description: "An all-in-one multi-campus school management portal and modern LMS engineered for end-to-end academic infrastructure.",
+    mission: "To power institutions with robust, scalable software that simplifies course registration, grading workflows, and automated computer-based testing.",
+    impact: "Streamlining operations for institutions from single-campus academies to expansive university networks with zero-friction administrative tools.",
+    link: "https://medxlearnapp.com",
   },
   {
     name: "MedxVerse Telemedicine & Virtual Care Ltd",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313040/IMG_0341_mpyrmt.jpg", 
-    description: "An immersive digital health ecosystem built to break down geographical walls and provide borderless virtual care.",
-    mission: "To pioneer next-generation virtual care delivery through spatial computing and intelligent diagnostics.",
-    impact: "Democratizing expert specialist consultations for patients in remote and underserved regions.",
-    link: "https://medxverse.com", // Replace with actual link
+    description: "A borderless digital health ecosystem bringing 24/7 instant online doctor consultations, electronic prescriptions, and medical data management to Africa.",
+    mission: "To bridge the critical healthcare deficit using an optimized, data-efficient digital care delivery framework tailored for emerging regions.",
+    impact: "Providing continuous, low-bandwidth medical access and verified digital prescriptions to thousands of remote or underserved users.",
+    link: "https://medxverseapp.com",
   },
   {
     name: "MedxGo",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313041/Frame_ieybdx.jpg", 
-    description: "An agile healthcare logistics platform built to mobilize medical supplies and quick-response support teams efficiently.",
-    mission: "To streamline clinical operations and secure immediate resource dispatch during critical times.",
-    impact: "Creating reliable channels for on-demand medical logistics and localized diagnostic support.",
-    link: "https://medxgoapp.com", // Replace with actual link
+    description: "A hyper-local delivery and health companion ecosystem combining instant pharmacy fulfillment, premium food delivery, and intelligent assistance.",
+    mission: "To connect communities with fast on-demand logistics, simple prescription uploads, and immediate medical guidance via Lexi AI.",
+    impact: "Accelerating last-mile delivery chains for essential care resources, daily meals, and digital triage tools directly to the consumer's doorstep.",
+    link: "https://medxgoapp.com",
   },
 ];
 

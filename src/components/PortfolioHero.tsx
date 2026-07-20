@@ -60,6 +60,7 @@ export default function PortfolioHero() {
 
   return (
     <section
+      id="home" // <-- FIX: Added this ID so the Navbar anchor links and scroll tracking work perfectly!
       className="w-full text-white flex flex-col pt-20 md:pt-24 relative overflow-hidden h-auto"
       style={{
         backgroundColor: colors.bgDark,
@@ -77,7 +78,7 @@ export default function PortfolioHero() {
       {/* --- Responsive Fixed Navbar --- */}
       <Navbar colors={colors} />
 
-      {/* --- Hero Grid Section (Vertical Spacing Tightened from py-28/md:py-40 down to py-12/md:py-16) --- */}
+      {/* --- Hero Grid Section --- */}
       <main className="grid grid-cols-1 md:grid-cols-12 gap-12 items-center max-w-7xl mx-auto w-full px-6 md:px-12 py-12 md:py-16 z-10">
         
         {/* Left Column: Text & CTAs */}
@@ -146,7 +147,6 @@ export default function PortfolioHero() {
           variants={fadeInRight}
           className="md:col-span-5 lg:col-span-6 w-full flex justify-center md:justify-end"
         >
-          {/* Sizing is scaled dynamically to expand slightly more on wider desktops (lg:max-w-[460px]) */}
           <div className="relative w-full max-w-[340px] lg:max-w-[420px] aspect-[4/5] rounded-2xl overflow-hidden border border-neutral-800/80 bg-neutral-900/20 backdrop-blur-sm p-3 shadow-2xl group">
             
             {/* Subtle inner container glow */}
