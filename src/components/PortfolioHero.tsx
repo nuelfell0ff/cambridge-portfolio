@@ -113,8 +113,13 @@ export default function PortfolioHero() {
 
           {/* Call to Actions */}
           <div className="mt-8 flex flex-col sm:flex-row justify-center md:justify-start items-center gap-4 w-full max-w-md sm:max-w-none">
-            <button
-              className="w-full sm:w-auto text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center justify-center gap-2 transition-all shadow-lg"
+            
+            {/* Action Meeting Link */}
+            <a
+              href="https://calendly.com/cambridgeprakash/30min"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full sm:w-auto text-white font-medium px-6 py-3 rounded-lg text-sm flex items-center justify-center gap-2 transition-all shadow-lg select-none"
               style={{ backgroundColor: colors.accentGreen }}
               onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#15526f'} 
               onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
@@ -129,7 +134,7 @@ export default function PortfolioHero() {
               >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
               </svg>
-            </button>
+            </a>
 
             <button
               className="w-full sm:w-auto border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all text-center flex items-center justify-center"
@@ -194,4 +199,5 @@ export default function PortfolioHero() {
       </main>
     </section>
   );
-}
+        }
+                
