@@ -8,13 +8,13 @@ const colors = {
 };
 
 // Category filters matching your requirements
-const categories = ["All", "Interviews", "Podcasts", "Articles", "TV & Radio", "Features"];
+const categories = ["All", "Articles", "Watch"];
 
 // Structured mock press data based on your specific requirements
 const pressItems = [
   {
     id: 1,
-    category: "Article",
+    category: "Articles",
     title: "MedxGo to Launch Food, Medication and Logistics Platform Across South-West Nigeria and Kwara State",
     source: "Legit",
     date: "March 2026",
@@ -23,7 +23,7 @@ const pressItems = [
   },
   {
     id: 2,
-    category: "Article",
+    category: "Articles",
     title: "MedxGo Emerges Africa’s Next Technology-driven Solution For Food, Medication, Logistics Delivery",
     source: "Independent Newspapers",
     date: "June 2026",
@@ -32,7 +32,7 @@ const pressItems = [
   },
   {
     id: 3,
-    category: "Article",
+    category: "Articles",
     title: "How MedxVerse Is Using AI, Telemedicine To Expand Healthcare Access Across Nigeria, Africa",
     source: "Independent Newspapers",
     date: "June 2026",
@@ -41,7 +41,7 @@ const pressItems = [
   },
   {
     id: 4,
-    category: "Article",
+    category: "Articles",
     title: "MedxVerse unveils telemedicine platform to expand healthcare access in Africa",
     source: "The Sun",
     date: "March 2026",
