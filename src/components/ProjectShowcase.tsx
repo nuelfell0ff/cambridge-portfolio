@@ -1,202 +1,208 @@
-'use client';
+"use client";
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
-import React, { useState } from 'react';
-
-interface ProductItem {
-  id: string;
-  title: string;
-  description: string;
-  appUrl: string;
-  imageUrl: string;
+interface ProductsSectionProps {
+  colors?: {
+    blue: string;
+    green: string;
+    accentGreen: string;
+    bgDark: string;
+  };
 }
 
-const PRODUCTS_DATA: ProductItem[] = [
-  {
-    id: '1',
-    title: 'Project App 1',
-    description: 'Interactive system dashboard application built with modern web technologies.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552543/image.png_2K_202607150715_1_wy3nn8.png',
-  },
-  {
-    id: '2',
-    title: 'Project App 2',
-    description: 'Dynamic platform workspace optimized for high-performance productivity.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552424/Group_17505_wtq2ci.png',
-  },
-  {
-    id: '3',
-    title: 'Project App 3',
-    description: 'Custom portal interface tailored for seamless data management.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552424/Group_17507_g5y1wz.png',
-  },
-  {
-    id: '4',
-    title: 'Project App 4',
-    description: 'Mobile responsive workspace optimized for lightweight mobile layouts.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_4_vonkgv.png',
-  },
-  {
-    id: '5',
-    title: 'Project App 5',
-    description: 'Compact application client environment designed for speed.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_5_xqmm2e.png',
-  },
-  {
-    id: '6',
-    title: 'Project App 6',
-    description: 'Integrated application component engine built for administrative utilities.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Group_17506_jkppkc.png',
-  },
-  {
-    id: '7',
-    title: 'Project App 7',
-    description: 'Streamlined control utility panel optimized for real-time tracking.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_3_x58tkf.png',
-  },
-  {
-    id: '8',
-    title: 'Project App 8',
-    description: 'Personalized secure access framework application.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_1_sa68m8.png',
-  },
-  {
-    id: '9',
-    title: 'Project App 9',
-    description: 'Performance statistics tracker running modular database pipelines.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_7_zv7amf.png',
-  },
-  {
-    id: '10',
-    title: 'Project App 10',
-    description: 'Cloud storage and asset manager system wrapper.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_9_p5fgrr.png',
-  },
-  {
-    id: '11',
-    title: 'Project App 11',
-    description: 'Responsive notification and queue delivery service asset.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_10_oewkze.png',
-  },
-  {
-    id: '12',
-    title: 'Project App 12',
-    description: 'Application integration bridge rendering custom UI blocks.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_6_c0jquc.png',
-  },
-  {
-    id: '13',
-    title: 'Project App 13',
-    description: 'Final execution gateway system manager platform client.',
-    appUrl: '#',
-    imageUrl: 'https://res.cloudinary.com/datmds5xl/image/upload/v1784552421/Android_Compact_-_8_cj1bkk.png',
-  },
+// Consistent application design theme colors
+const defaultColors = {
+  blue: '#193A60',
+  green: '#1F7299',
+  accentGreen: '#1F7299',
+  bgDark: '#0a0806',
+};
+
+const PRODUCTS = [
+  { id: 1, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552543/image.png_2K_202607150715_1_wy3nn8.png", title: "MedXVerse Dashboard", category: "Core Platform" },
+  { id: 2, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552424/Group_17505_wtq2ci.png", title: "Clinical Workflow Manager", category: "Enterprise" },
+  { id: 3, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552424/Group_17507_g5y1wz.png", title: "MedXGo Mobile Client", category: "Mobile System" },
+  { id: 4, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_4_vonkgv.png", title: "Patient Vital Monitor", category: "Diagnostics" },
+  { id: 5, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_5_xqmm2e.png", title: "MedXLearn Portal", category: "Education" },
+  { id: 6, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Group_17506_jkppkc.png", title: "Telehealth Hub Interface", category: "Remote Care" },
+  { id: 7, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_3_x58tkf.png", title: "EHR Synchronizer", category: "Data Management" },
+  { id: 8, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552423/Android_Compact_-_1_sa68m8.png", title: "Pharmacy Dispensation Module", category: "Logistics" },
+  { id: 9, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_7_zv7amf.png", title: "Diagnostic Analytics Suite", category: "AI Analytics" },
+  { id: 10, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_9_p5fgrr.png", title: "Lab Results Tracker", category: "Diagnostics" },
+  { id: 11, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_10_oewkze.png", title: "Emergency Dispatch Router", category: "Operations" },
+  { id: 12, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552422/Android_Compact_-_6_c0jquc.png", title: "Billing & Claims Processor", category: "Finance" },
+  { id: 13, image: "https://res.cloudinary.com/datmds5xl/image/upload/v1784552421/Android_Compact_-_8_cj1bkk.png", title: "Secure Patient Vault", category: "Security" }
 ];
 
-export default function ProjectShowcase() {
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08 }
+  }
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: [0.215, 0.61, 0.355, 1] }
+  }
+};
+
+export default function ProductsSection({ colors = defaultColors }: ProductsSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [itemsToShow, setItemsToShow] = useState(6);
+
+  // Manage responsive cutoffs accurately safely inside window environment lifecycle
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsToShow(isExpanded ? PRODUCTS.length : 4);
+      } else {
+        setItemsToShow(isExpanded ? PRODUCTS.length : 6);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isExpanded]);
+
+  const visibleProducts = PRODUCTS.slice(0, itemsToShow);
 
   return (
-    <section className="py-12 px-4 max-w-7xl mx-auto dark:bg-zinc-950 dark:text-zinc-50">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold tracking-tight">Applications</h2>
-        <p className="text-zinc-500 dark:text-zinc-400 mt-2">
-          Explore the projects and interactive portals crafted for the platform ecosystem.
-        </p>
-      </div>
+    <section
+      id="companies"
+      className="w-full text-white px-6 md:px-12 py-24 relative overflow-hidden border-t border-neutral-900/40"
+      style={{ backgroundColor: colors.bgDark, fontFamily: "'Poppins', sans-serif" }}
+    >
+      {/* Background Interactive Radial Gradient Neon Base */}
+      <div 
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          backgroundImage: `radial-gradient(circle at 20% 30%, ${colors.blue}10 0%, transparent 50%)`
+        }}
+      />
 
-      {/* Responsive Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {PRODUCTS_DATA.map((product, index) => {
-          let visibilityClass = 'block';
-          if (!isExpanded) {
-            if (index >= 4 && index < 6) {
-              visibilityClass = 'hidden lg:block';
-            } else if (index >= 6) {
-              visibilityClass = 'hidden';
-            }
-          }
+      <div className="max-w-7xl mx-auto w-full z-10 relative">
+        
+        {/* Section Header */}
+        <div className="flex flex-col mb-16 text-center md:text-left">
+          <span 
+            className="text-[11px] font-bold tracking-[0.25em] uppercase mb-3"
+            style={{ color: colors.accentGreen }}
+          >
+            Product Portfolio
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
+            Our Ecosystem & <span style={{ color: colors.green }}>Products</span>
+          </h2>
+          <div className="h-[2px] w-12 mt-4 mx-auto md:mx-0" style={{ backgroundColor: colors.accentGreen }} />
+        </div>
 
-          return (
-            <div
-              key={product.id}
-              className={`${visibilityClass} group relative flex flex-col overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5`}
-            >
-              {/* Image Frame */}
-              <div className="aspect-[16/10] w-full bg-zinc-100 dark:bg-zinc-800 relative overflow-hidden border-b border-zinc-100 dark:border-zinc-800">
-                <img
-                  src={product.imageUrl}
-                  alt={product.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-              </div>
-
-              {/* Text Meta Content */}
-              <div className="p-5 flex flex-col flex-grow">
-                <div className="flex items-start justify-between gap-2 mb-2">
-                  <h3 className="font-semibold text-lg text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {product.title}
-                  </h3>
-                  <a
-                    href={product.appUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="p-1 rounded-md text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
-                    aria-label={`Open ${product.title}`}
-                  >
-                    {/* Inline SVG for ArrowUpRight */}
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                      <line x1="7" y1="17" x2="17" y2="7"></line>
-                      <polyline points="7 7 17 7 17 17"></polyline>
-                    </svg>
-                  </a>
-                </div>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400 line-clamp-2">
-                  {product.description}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* Action Toggle Button */}
-      <div className="mt-12 flex justify-center">
-        <button
-          onClick={() => setIsExpanded(!isExpanded)}
-          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-700 dark:text-zinc-300 shadow-sm transition-all hover:bg-zinc-50 dark:hover:bg-zinc-800 active:scale-95"
+        {/* Dynamic Products Grid Layout */}
+        <motion.div 
+          layout="position"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
         >
-          {isExpanded ? (
-            <>
-              Show Less
-              {/* Inline SVG for ChevronUp */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                <polyline points="18 15 12 9 6 15"></polyline>
-              </svg>
-            </>
-          ) : (
-            <>
-              See More
-              {/* Inline SVG for ChevronDown */}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </>
-          )}
-        </button>
+          <AnimatePresence mode="popLayout">
+            {visibleProducts.map((product) => (
+              <motion.div
+                key={product.id}
+                layout
+                variants={cardVariants}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.25 } }}
+                className="group relative flex flex-col rounded-2xl border border-neutral-900 bg-neutral-950/40 backdrop-blur-md overflow-hidden transition-all duration-300 hover:border-neutral-800/80 hover:bg-neutral-900/20 shadow-lg hover:shadow-2xl"
+              >
+                {/* Visual Media Container Wrapper */}
+                <div className="relative aspect-[4/3] w-full overflow-hidden border-b border-neutral-900 bg-neutral-950 flex items-center justify-center p-4">
+                  {/* Outer Frame Mockup Background Accent Layer */}
+                  <div className="absolute inset-0 bg-gradient-to-b from-transparent to-neutral-950/20 z-10 pointer-events-none" />
+                  
+                  {/* Product Image Media Assets */}
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="max-h-full max-w-full object-contain object-center transition-transform duration-500 ease-out group-hover:scale-[1.03] z-0"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Content Panel Frame details */}
+                <div className="p-6 flex flex-col justify-between flex-grow relative z-20">
+                  <div className="flex flex-col gap-1">
+                    <span 
+                      className="text-[10px] uppercase font-bold tracking-wider"
+                      style={{ color: colors.accentGreen }}
+                    >
+                      {product.category}
+                    </span>
+                    <h3 className="text-base font-semibold text-neutral-200 group-hover:text-white transition-colors duration-300 tracking-tight leading-snug">
+                      {product.title}
+                    </h3>
+                  </div>
+
+                  {/* Interactive Dynamic Bottom Vector Tag */}
+                  <div className="flex items-center gap-1.5 mt-4 text-xs font-medium text-neutral-500 group-hover:text-neutral-300 transition-colors duration-300 self-start">
+                    <span>View Project Specifications</span>
+                    <svg 
+                      className="w-3.5 h-3.5 transition-transform duration-300 transform group-hover:translate-x-1" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2.5" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Subtle Hover Radial Card Accent Layer */}
+                <div 
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"
+                  style={{
+                    backgroundImage: `radial-gradient(circle at 50% 100%, ${colors.accentGreen}0B 0%, transparent 60%)`
+                  }}
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Dynamic Interactive Show State Action Button Toggle */}
+        <motion.div 
+          layout="position"
+          className="mt-16 flex justify-center w-full relative z-30"
+        >
+          <button
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="flex items-center gap-2 border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all select-none shadow-md"
+            style={{ backgroundColor: `rgba(25, 58, 96, 0.08)` }}
+          >
+            <span>{isExpanded ? 'See Less' : 'See More'}</span>
+            <svg 
+              className={`w-4 h-4 text-neutral-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+              fill="none" 
+              stroke="currentColor" 
+              strokeWidth="2.5" 
+              viewBox="0 0 24 24"
+              style={{ color: colors.accentGreen }}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+            </svg>
+          </button>
+        </motion.div>
+
       </div>
     </section>
   );
-              }
+}
