@@ -140,7 +140,7 @@ export default function PortfolioHero() {
               className="w-full sm:w-auto border border-neutral-800 hover:border-neutral-700 hover:bg-neutral-900/60 text-neutral-200 font-medium px-6 py-3 rounded-lg text-sm transition-all text-center flex items-center justify-center"
               style={{ backgroundColor: `rgba(25, 58, 96, 0.15)` }}
             >
-              View Portfolio
+              View CV
             </button>
           </div>
         </motion.div>
