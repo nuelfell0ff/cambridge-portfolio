@@ -11,7 +11,7 @@ const colors = {
 const headlines = [
   "Healthcare Technology Entrepreneur",
   "Founder",
-  "Medical Student",
+  "Medical Professional",
   "Digital Health Innovator",
   "AI in Medicine Advocate",
   "Public Speaker",
