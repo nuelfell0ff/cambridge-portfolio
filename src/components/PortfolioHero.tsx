@@ -164,7 +164,7 @@ export default function PortfolioHero() {
 
             {/* Image Component */}
             <img 
-              src="https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784282802/IMG_0015_nxb79u.jpg"
+              src="https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285395/IMG_0013_ypaz60.jpg"
               alt="Timilehin Seyi Ogunsakin" 
               className="w-full h-full object-cover rounded-xl transition-all duration-700 ease-out"
               fetchPriority="high" 
