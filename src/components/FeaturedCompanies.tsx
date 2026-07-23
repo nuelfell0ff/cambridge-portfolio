@@ -10,6 +10,14 @@ const colors = {
 // --- Easily Update Your Company Details and Cloudinary Logo Links Here ---
 const companies = [
   {
+    name: "Lexi AI",
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784823883/SAVE_20260723_172314_nrwugz.jpg", // Replace with your dedicated Lexi AI logo URL if available
+    description: "An intelligent conversational AI platform built for real-time triage, automated workflow support, and natural language decision assistance.",
+    mission: "To deliver accessible, multilingual artificial intelligence that simplifies complex inquiries, streamlines daily operations, and guides users instantly.",
+    impact: "Serving as an integrated intelligence engine across health, delivery, and automated user assistance platforms with high accuracy and low latency.",
+    link: "https://lexiai.chat",
+  },
+  {
     name: "MedxLearn",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784284283/SAVE_20260717_113050_dpq3jv.jpg", 
     description: "An all-in-one multi-campus school management portal and modern LMS engineered for end-to-end academic infrastructure.",
@@ -94,7 +102,7 @@ export default function FeaturedCompanies() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"
         >
           {companies.map((company, index) => (
             <motion.div
@@ -166,4 +174,4 @@ export default function FeaturedCompanies() {
       </div>
     </section>
   );
-}
+    }
