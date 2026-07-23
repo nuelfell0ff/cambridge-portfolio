@@ -41,7 +41,7 @@ const galleryItems = [
   {
     title: "Portraits",
     description: "Official executive headshot for leadership panels.",
-    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285393/IMG_0016_z3ccvn.jpg",
+    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784823883/SAVE_20260723_172314_nrwugz.jpg",
     link: "#",
   },
 ];
