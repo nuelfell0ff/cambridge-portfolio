@@ -35,7 +35,7 @@ const galleryItems = [
   {
     title: "Frames & Profiles",
     description: "A simple, clean studio shot keeping things light and personal.",
-    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784285395/IMG_0013_ypaz60.jpg",
+    imageUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1785242290/IMG_0276_lvi1uu.jpg",
     link: "#",
   },
   {
