@@ -1,18 +1,18 @@
 "use client";
-import React, { useEffect } from 'react';
-import { motion, useAnimation, Variants } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, useAnimation, Variants, AnimatePresence } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 
 // Defined colors matching the professional medical blue theme
 const colors = {
   blue: '#193A60', 
-  green: '#1F7299', // Swapped out original green for the medical blue highlight
-  accentGreen: '#1F7299', // Swapped out accent green
+  green: '#1F7299', // Medical blue highlight
+  accentGreen: '#1F7299',
   textWhite: '#FFFFFF',
   bgDark: '#0a0806',
 };
 
-// SVG Icon Components for Footer (using new medical blue highlight)
+// SVG Icon Components for Footer
 const Icon = ({ path }: { path: string }) => (
   <svg
     className="w-4 h-4"
@@ -48,6 +48,7 @@ const fadeInRight: Variants = {
 
 export default function PortfolioHero() {
   const controls = useAnimation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     // Inject Poppins font link
@@ -56,11 +57,25 @@ export default function PortfolioHero() {
     link.rel = 'stylesheet';
     document.head.appendChild(link);
     controls.start("visible");
+
+    // Check session storage so popup triggers on initial open per session
+    const hasSeenModal = sessionStorage.getItem('hasSeenIntroModal');
+    if (!hasSeenModal) {
+      const timer = setTimeout(() => {
+        setIsModalOpen(true);
+      }, 500); // 500ms smooth entrance delay
+      return () => clearTimeout(timer);
+    }
   }, [controls]);
+
+  const closeModal = () => {
+    sessionStorage.setItem('hasSeenIntroModal', 'true');
+    setIsModalOpen(false);
+  };
 
   return (
     <section
-      id="home" // <-- FIX: Added this ID so the Navbar anchor links and scroll tracking work perfectly!
+      id="home"
       className="w-full text-white flex flex-col pt-20 md:pt-24 relative overflow-hidden h-auto"
       style={{
         backgroundColor: colors.bgDark,
@@ -74,6 +89,105 @@ export default function PortfolioHero() {
           backgroundImage: `radial-gradient(circle at 85% 45%, ${colors.green}15 0%, transparent 55%)`
         }}
       />
+
+      {/* --- Intro Modal Popup --- */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeModal}
+              className="fixed inset-0 bg-black/85 backdrop-blur-md cursor-pointer"
+            />
+
+            {/* Modal Box */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", duration: 0.6, bounce: 0.15 }}
+              className="relative w-full max-w-2xl rounded-2xl border border-neutral-800 bg-neutral-950/90 p-6 sm:p-8 shadow-2xl z-10 overflow-hidden"
+              style={{ backgroundColor: `${colors.bgDark}FD` }}
+            >
+              {/* Soft Ambient Corner Glow */}
+              <div 
+                className="absolute -top-16 -right-16 w-56 h-56 rounded-full pointer-events-none opacity-20 filter blur-[60px]"
+                style={{ backgroundColor: colors.green }}
+              />
+
+              {/* Close Button */}
+              <button
+                onClick={closeModal}
+                className="absolute top-4 right-4 p-2 text-neutral-400 hover:text-white rounded-full bg-neutral-900/80 hover:bg-neutral-800 border border-neutral-800 transition-colors z-20"
+                aria-label="Close modal"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+
+              {/* Modal Inner Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+                {/* Doctor Portrait Container */}
+                <div className="md:col-span-5 flex justify-center">
+                  <div className="relative w-44 h-56 sm:w-48 sm:h-64 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-900 shadow-xl group">
+                    <img 
+                      src="https://res.cloudinary.com/datmds5xl/image/upload/v1785762069/IMG_0702_qlpq9d.jpg"
+                      alt="Dr. Cambridge" 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+                </div>
+
+                {/* Text Content */}
+                <div className="md:col-span-7 flex flex-col justify-center text-left">
+                  <span 
+                    className="text-[10px] font-bold tracking-[0.25em] uppercase mb-2"
+                    style={{ color: colors.accentGreen }}
+                  >
+                    Welcome
+                  </span>
+
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+                    Hello, I’m <span style={{ color: colors.green }}>Dr. Cambridge</span>
+                  </h2>
+
+                  <p className="text-xs font-semibold text-neutral-400 tracking-wider uppercase mt-1 mb-3">
+                    Physician <span className="text-neutral-600">|</span> Founder <span className="text-neutral-600">|</span> Global Health Innovator
+                  </p>
+
+                  <p className="text-xs sm:text-sm text-neutral-300 font-light leading-relaxed mb-5">
+                    I believe healthcare should be accessible, intelligent, and patient-centered. Through medicine, artificial intelligence, and entrepreneurship, I’m working to transform how healthcare is delivered across Africa and the world.
+                  </p>
+
+                  <p className="text-xs font-semibold tracking-wide italic mb-6" style={{ color: colors.green }}>
+                    “Let’s Build the Future Together.”
+                  </p>
+
+                  {/* Dismiss Action */}
+                  <div>
+                    <button
+                      onClick={closeModal}
+                      className="w-full sm:w-auto px-6 py-2.5 rounded-lg text-xs font-semibold text-white transition-all shadow-lg flex items-center justify-center gap-2"
+                      style={{ backgroundColor: colors.accentGreen }}
+                      onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#15526f'}
+                      onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
+                    >
+                      Explore Portfolio
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* --- Responsive Fixed Navbar --- */}
       <Navbar colors={colors} />
@@ -199,5 +313,4 @@ export default function PortfolioHero() {
       </main>
     </section>
   );
-        }
-                
+}
