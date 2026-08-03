@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 interface NavbarProps {
@@ -18,37 +18,70 @@ const fadeInDown: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
+// 4 Featured Companies List
+const companyItems = [
+  {
+    name: "Lexi AI",
+    link: "https://lexiai.chat",
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784823883/SAVE_20260723_172314_nrwugz.jpg"
+  },
+  {
+    name: "MedxLearn",
+    link: "https://medxlearnapp.com",
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784284283/SAVE_20260717_113050_dpq3jv.jpg"
+  },
+  {
+    name: "MedxVerse Telemedicine",
+    link: "https://medxverseapp.com",
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313040/IMG_0341_mpyrmt.jpg"
+  },
+  {
+    name: "MedxGo",
+    link: "https://medxgoapp.com",
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313041/Frame_ieybdx.jpg"
+  },
+];
+
 const navItems = [
   { id: 'home', label: 'Home' },
   { id: 'about', label: 'About' },
-  { id: 'companies', label: 'Companies' },
+  { id: 'companies', label: 'Companies', isDropdown: true },
   { id: 'gallery', label: 'Gallery' },
   { id: 'press', label: 'Press' },
   { id: 'testimonials', label: 'Testimonials' },
 ];
 
-// Added your Calendly link as the default fallback
 export default function Navbar({ 
   colors, 
   bookingUrl = "https://calendly.com/cambridgeprakash/30min" 
 }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Failsafe layout-agnostic navigation handler for mobile and desktop viewports
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
     e.preventDefault();
-    
-    // Close the drawer immediately to trigger the exit animation frame
     setIsOpen(false); 
+    setIsDropdownOpen(false);
 
-    // Defer measuring the layout bounding boxes until the browser registers the state change
     setTimeout(() => {
       const element = document.getElementById(id);
       if (element) {
-        // Calculate precise offset to accommodate the fixed position header height
         const headerOffset = 84; 
         const elementPosition = element.getBoundingClientRect().top;
         const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
@@ -58,10 +91,9 @@ export default function Navbar({
           behavior: 'smooth'
         });
       }
-    }, 80); // 80ms buffer resolves frame lock contention with AnimatePresence
+    }, 80);
   };
 
-  // Monitor scrolling to track active sections
   useEffect(() => {
     const handleIntersection = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
@@ -80,9 +112,9 @@ export default function Navbar({
     const observer = new IntersectionObserver(handleIntersection, observerOptions);
 
     navItems.forEach((item) => {
-      const element = document.getElementById(item.id);
-      if (element) {
-        observer.observe(element);
+      if (!item.isDropdown) {
+        const element = document.getElementById(item.id);
+        if (element) observer.observe(element);
       }
     });
 
@@ -130,6 +162,77 @@ export default function Navbar({
         {/* Desktop Navigation Links */}
         <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
           {navItems.map((item) => {
+            if (item.isDropdown) {
+              return (
+                <div 
+                  key={item.id} 
+                  ref={dropdownRef}
+                  className="relative group"
+                  onMouseEnter={() => setIsDropdownOpen(true)}
+                  onMouseLeave={() => setIsDropdownOpen(false)}
+                >
+                  <button
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="flex items-center gap-1.5 text-neutral-400 hover:text-white pb-1 transition-colors duration-300 focus:outline-none"
+                  >
+                    <span>{item.label}</span>
+                    <svg 
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  <AnimatePresence>
+                    {isDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute left-0 top-full pt-2 w-64 z-50"
+                      >
+                        <div 
+                          className="rounded-xl border border-neutral-800 p-2 shadow-2xl backdrop-blur-2xl"
+                          style={{ backgroundColor: `${colors.bgDark}EE` }}
+                        >
+                          {companyItems.map((comp, idx) => (
+                            <a
+                              key={idx}
+                              href={comp.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={() => setIsDropdownOpen(false)}
+                              className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-800/60 transition-colors group/item"
+                            >
+                              <img 
+                                src={comp.logoUrl} 
+                                alt={comp.name} 
+                                className="w-7 h-7 rounded-md object-cover border border-neutral-800"
+                              />
+                              <div className="flex-1">
+                                <p className="text-xs font-semibold text-white group-hover/item:text-white flex items-center justify-between">
+                                  {comp.name}
+                                  <svg className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                                  </svg>
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            }
+
             const isActive = activeSection === item.id;
             return (
               <a
@@ -154,7 +257,7 @@ export default function Navbar({
           })}
         </div>
 
-        {/* Desktop CTA Button Link */}
+        {/* Desktop CTA Button */}
         <a
           href={bookingUrl}
           target="_blank"
@@ -173,15 +276,9 @@ export default function Navbar({
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50"
           aria-label="Toggle Menu"
         >
-          <span
-            className={`w-6 h-0.5 bg-white transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`}
-          />
-          <span
-            className={`w-6 h-0.5 bg-white transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`}
-          />
-          <span
-            className={`w-6 h-0.5 bg-white transition-transform duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`}
-          />
+          <span className={`w-6 h-0.5 bg-white transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`w-6 h-0.5 bg-white transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
+          <span className={`w-6 h-0.5 bg-white transition-transform duration-300 ${isOpen ? '-rotate-45 -translate-y-2' : ''}`} />
         </button>
       </div>
 
@@ -197,6 +294,47 @@ export default function Navbar({
             style={{ backgroundColor: `${colors.bgDark}FA` }}
           >
             {navItems.map((item) => {
+              if (item.isDropdown) {
+                return (
+                  <div key={item.id} className="flex flex-col">
+                    <button
+                      onClick={() => setIsMobileDropdownOpen(!isMobileDropdownOpen)}
+                      className="text-base font-medium flex items-center justify-between py-1 text-neutral-400 hover:text-white"
+                    >
+                      <span>{item.label}</span>
+                      <svg 
+                        className={`w-4 h-4 transition-transform duration-200 ${isMobileDropdownOpen ? 'rotate-180' : ''}`} 
+                        fill="none" 
+                        stroke="currentColor" 
+                        strokeWidth="2" 
+                        viewBox="0 0 24 24"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                      </svg>
+                    </button>
+
+                    {/* Mobile Companies Nested Accordion */}
+                    {isMobileDropdownOpen && (
+                      <div className="pl-4 mt-2 space-y-3 border-l border-neutral-800 my-2">
+                        {companyItems.map((comp, idx) => (
+                          <a
+                            key={idx}
+                            href={comp.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={() => setIsOpen(false)}
+                            className="flex items-center gap-3 py-1.5 text-sm text-neutral-300 hover:text-white"
+                          >
+                            <img src={comp.logoUrl} alt={comp.name} className="w-5 h-5 rounded object-cover" />
+                            <span>{comp.name}</span>
+                          </a>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               const isActive = activeSection === item.id;
               return (
                 <a
@@ -218,7 +356,6 @@ export default function Navbar({
               );
             })}
             
-            {/* Mobile CTA Button Link */}
             <a
               href={bookingUrl}
               target="_blank"
@@ -234,5 +371,4 @@ export default function Navbar({
       </AnimatePresence>
     </motion.header>
   );
-      }
-        
+}
