@@ -6,7 +6,7 @@ import ProfessionalHeadline from '@/components/ProfessionalHeadline';
 import About from '@/components/About';
 import ProjectShowcase from '@/components/ProjectShowcase';
 import Certificates from '@/components/Certificates';
-import FeaturedCompanies from '@/components/FeaturedCompanies';
+// import FeaturedCompanies from '@/components/FeaturedCompanies';
 import PhotoGallery from '@/components/PhotoGallery';
 import VisionStatement from '@/components/VisionStatement';
 import MediaPress from '@/components/MediaPress';
@@ -37,7 +37,7 @@ export default function Home() {
 
       {/* 3. Proof, Validation & Affiliation Layers */}
       <Certificates />
-      <FeaturedCompanies />
+      {/* <FeaturedCompanies /> */}
       <PhotoGallery />
 
       {/* 4. Vision, Editorial & Media Narratives */}
