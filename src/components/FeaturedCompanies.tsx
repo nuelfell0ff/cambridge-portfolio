@@ -3,21 +3,22 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 
 const colors = {
-  green: '#1F7299', // Professional medical blue highlight
+  green: '#1F7299',
   bgDark: '#0a0806',
 };
 
-// --- Easily Update Your Company Details and Cloudinary Logo Links Here ---
 const companies = [
   {
+    id: "company-lexi-ai",
     name: "Lexi AI",
-    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784823883/SAVE_20260723_172314_nrwugz.jpg", // Replace with your dedicated Lexi AI logo URL if available
+    logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784823883/SAVE_20260723_172314_nrwugz.jpg",
     description: "An intelligent conversational AI platform built for real-time triage, automated workflow support, and natural language decision assistance.",
     mission: "To deliver accessible, multilingual artificial intelligence that simplifies complex inquiries, streamlines daily operations, and guides users instantly.",
     impact: "Serving as an integrated intelligence engine across health, delivery, and automated user assistance platforms with high accuracy and low latency.",
     link: "https://lexiai.chat",
   },
   {
+    id: "company-medxlearn",
     name: "MedxLearn",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784284283/SAVE_20260717_113050_dpq3jv.jpg", 
     description: "An all-in-one multi-campus school management portal and modern LMS engineered for end-to-end academic infrastructure.",
@@ -26,6 +27,7 @@ const companies = [
     link: "https://medxlearnapp.com",
   },
   {
+    id: "company-medxverse",
     name: "MedxVerse Telemedicine & Virtual Care Ltd",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313040/IMG_0341_mpyrmt.jpg", 
     description: "A borderless digital health ecosystem bringing 24/7 instant online doctor consultations, electronic prescriptions, and medical data management to Africa.",
@@ -34,6 +36,7 @@ const companies = [
     link: "https://medxverseapp.com",
   },
   {
+    id: "company-medxgo",
     name: "MedxGo",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313041/Frame_ieybdx.jpg", 
     description: "A hyper-local delivery and health companion ecosystem combining instant pharmacy fulfillment, premium food delivery, and intelligent assistance.",
@@ -43,7 +46,6 @@ const companies = [
   },
 ];
 
-// Core scrolling animations
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 30 },
   visible: { 
@@ -68,7 +70,6 @@ export default function FeaturedCompanies() {
       className="py-20 md:py-32 px-6 md:px-12 relative overflow-hidden"
       style={{ backgroundColor: colors.bgDark, fontFamily: "'Poppins', sans-serif" }}
     >
-      {/* Soft background glow */}
       <div 
         className="absolute top-1/2 right-10 w-[250px] h-[250px] rounded-full pointer-events-none opacity-5 filter blur-[100px]"
         style={{ backgroundColor: colors.green }}
@@ -76,7 +77,7 @@ export default function FeaturedCompanies() {
 
       <div className="max-w-6xl mx-auto z-10 relative">
         
-        {/* --- Header --- */}
+        {/* Header */}
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -96,7 +97,7 @@ export default function FeaturedCompanies() {
           <div className="h-[2px] w-12 mt-6" style={{ backgroundColor: colors.green }} />
         </motion.div>
 
-        {/* --- Companies Cards Grid --- */}
+        {/* Companies Grid */}
         <motion.div 
           initial="hidden"
           whileInView="visible"
@@ -104,14 +105,14 @@ export default function FeaturedCompanies() {
           variants={staggerContainer}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"
         >
-          {companies.map((company, index) => (
+          {companies.map((company) => (
             <motion.div
-              key={index}
+              key={company.id}
+              id={company.id} // Added unique ID for smooth scrolling targets
               variants={fadeInUp}
-              className="border border-neutral-900 bg-neutral-950/40 hover:border-neutral-800/80 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 group hover:shadow-xl"
+              className="border border-neutral-900 bg-neutral-950/40 hover:border-neutral-800/80 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 group hover:shadow-xl scroll-mt-28"
             >
               <div>
-                {/* Logo & Name Area */}
                 <div className="flex items-center gap-4 mb-6">
                   <div className="relative w-12 h-12 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-900 shrink-0">
                     <img 
@@ -126,12 +127,10 @@ export default function FeaturedCompanies() {
                   </h3>
                 </div>
 
-                {/* Main Bio / Description */}
                 <p className="text-sm text-neutral-400 font-light leading-relaxed mb-6">
                   {company.description}
                 </p>
 
-                {/* Sub-details (Mission & Impact) */}
                 <div className="space-y-4 pt-4 border-t border-neutral-900">
                   <div>
                     <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 block">Mission</span>
@@ -144,16 +143,14 @@ export default function FeaturedCompanies() {
                 </div>
               </div>
 
-              {/* Action Link Button */}
+              {/* External Website Button */}
               <div className="pt-8">
                 <a 
                   href={company.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-semibold tracking-wider uppercase transition-all"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase transition-all px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-700 bg-neutral-900/40"
                   style={{ color: colors.green }}
-                  onMouseOver={(e) => e.currentTarget.style.color = '#15526f'}
-                  onMouseOut={(e) => e.currentTarget.style.color = colors.green}
                 >
                   Visit Website
                   <svg 
@@ -174,4 +171,4 @@ export default function FeaturedCompanies() {
       </div>
     </section>
   );
-    }
+}
