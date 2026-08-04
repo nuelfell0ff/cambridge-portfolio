@@ -18,26 +18,26 @@ const fadeInDown: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
-// 4 Featured Companies List
+// Updated company items to route to internal section ID or route path
 const companyItems = [
   {
     name: "Lexi AI",
-    link: "https://lexiai.chat",
+    id: "company-lexi-ai",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784823883/SAVE_20260723_172314_nrwugz.jpg"
   },
   {
     name: "MedxLearn",
-    link: "https://medxlearnapp.com",
+    id: "company-medxlearn",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784284283/SAVE_20260717_113050_dpq3jv.jpg"
   },
   {
     name: "MedxVerse Telemedicine",
-    link: "https://medxverseapp.com",
+    id: "company-medxverse",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313040/IMG_0341_mpyrmt.jpg"
   },
   {
     name: "MedxGo",
-    link: "https://medxgoapp.com",
+    id: "company-medxgo",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313041/Frame_ieybdx.jpg"
   },
 ];
@@ -63,7 +63,6 @@ export default function Navbar({
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -94,44 +93,6 @@ export default function Navbar({
     }, 80);
   };
 
-  useEffect(() => {
-    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-        }
-      });
-    };
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '-30% 0px -40% 0px',
-      threshold: 0,
-    };
-
-    const observer = new IntersectionObserver(handleIntersection, observerOptions);
-
-    navItems.forEach((item) => {
-      if (!item.isDropdown) {
-        const element = document.getElementById(item.id);
-        if (element) observer.observe(element);
-      }
-    });
-
-    const handleScrollFallback = () => {
-      if (window.scrollY < 50) {
-        setActiveSection('home');
-      }
-    };
-
-    window.addEventListener('scroll', handleScrollFallback, { passive: true });
-
-    return () => {
-      observer.disconnect();
-      window.removeEventListener('scroll', handleScrollFallback);
-    };
-  }, []);
-
   return (
     <motion.header
       initial="hidden"
@@ -142,7 +103,7 @@ export default function Navbar({
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between relative">
         
-        {/* Logo and Brand Name */}
+        {/* Brand Logo */}
         <a 
           href="#home" 
           onClick={(e) => handleNavClick(e, 'home')}
@@ -159,7 +120,7 @@ export default function Navbar({
           </span>
         </a>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
           {navItems.map((item) => {
             if (item.isDropdown) {
@@ -204,11 +165,9 @@ export default function Navbar({
                           {companyItems.map((comp, idx) => (
                             <a
                               key={idx}
-                              href={comp.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={() => setIsDropdownOpen(false)}
-                              className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-800/60 transition-colors group/item"
+                              href={`#${comp.id}`}
+                              onClick={(e) => handleNavClick(e, comp.id)}
+                              className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-800/60 transition-colors group/item cursor-pointer"
                             >
                               <img 
                                 src={comp.logoUrl} 
@@ -218,8 +177,8 @@ export default function Navbar({
                               <div className="flex-1">
                                 <p className="text-xs font-semibold text-white group-hover/item:text-white flex items-center justify-between">
                                   {comp.name}
-                                  <svg className="w-3 h-3 opacity-0 group-hover/item:opacity-100 transition-opacity" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                                  <svg className="w-3 h-3 text-neutral-400 group-hover/item:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                   </svg>
                                 </p>
                               </div>
@@ -257,20 +216,18 @@ export default function Navbar({
           })}
         </div>
 
-        {/* Desktop CTA Button */}
+        {/* CTA Button */}
         <a
           href={bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:block text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-all shadow-md text-center select-none"
           style={{ backgroundColor: colors.green }}
-          onMouseOver={(e) => e.currentTarget.style.backgroundColor = colors.accentGreen}
-          onMouseOut={(e) => e.currentTarget.style.backgroundColor = colors.green}
         >
           Get in Touch
         </a>
 
-        {/* Mobile Hamburger Button */}
+        {/* Mobile Hamburger */}
         <button
           onClick={toggleMenu}
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50"
@@ -282,7 +239,7 @@ export default function Navbar({
         </button>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -313,16 +270,13 @@ export default function Navbar({
                       </svg>
                     </button>
 
-                    {/* Mobile Companies Nested Accordion */}
                     {isMobileDropdownOpen && (
                       <div className="pl-4 mt-2 space-y-3 border-l border-neutral-800 my-2">
                         {companyItems.map((comp, idx) => (
                           <a
                             key={idx}
-                            href={comp.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={() => setIsOpen(false)}
+                            href={`#${comp.id}`}
+                            onClick={(e) => handleNavClick(e, comp.id)}
                             className="flex items-center gap-3 py-1.5 text-sm text-neutral-300 hover:text-white"
                           >
                             <img src={comp.logoUrl} alt={comp.name} className="w-5 h-5 rounded object-cover" />
@@ -355,17 +309,6 @@ export default function Navbar({
                 </a>
               );
             })}
-            
-            <a
-              href={bookingUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setIsOpen(false)}
-              className="text-white font-medium w-full py-3 rounded-lg text-sm transition-all text-center mt-2 shadow-md block select-none"
-              style={{ backgroundColor: colors.green }}
-            >
-              Get in Touch
-            </a>
           </motion.div>
         )}
       </AnimatePresence>
