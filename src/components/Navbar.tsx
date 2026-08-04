@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 interface NavbarProps {
@@ -130,7 +131,7 @@ export default function Navbar({
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between relative">
         
         {/* Brand Logo */}
-        <a 
+        <Link 
           href="#home" 
           onClick={(e) => handleNavClick(e, 'home')}
           className="flex items-center space-x-3 group cursor-pointer focus:outline-none"
@@ -144,7 +145,7 @@ export default function Navbar({
           <span className="text-lg md:text-xl font-semibold tracking-tight text-white group-hover:text-neutral-200 transition-colors">
             Timilehin Seyi Ogunsakin
           </span>
-        </a>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 text-sm font-medium">
@@ -189,7 +190,7 @@ export default function Navbar({
                           style={{ backgroundColor: `${colors.bgDark}F2` }}
                         >
                           {companyItems.map((comp) => (
-                            <a
+                            <Link
                               key={comp.id}
                               href={`#${comp.id}`}
                               onClick={(e) => handleNavClick(e, comp.id)}
@@ -208,7 +209,7 @@ export default function Navbar({
                                   </svg>
                                 </p>
                               </div>
-                            </a>
+                            </Link>
                           ))}
                         </div>
                       </motion.div>
@@ -220,7 +221,7 @@ export default function Navbar({
 
             const isActive = activeSection === item.id;
             return (
-              <a
+              <Link
                 key={item.id}
                 href={`#${item.id}`}
                 onClick={(e) => handleNavClick(e, item.id)}
@@ -237,13 +238,13 @@ export default function Navbar({
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-              </a>
+              </Link>
             );
           })}
         </div>
 
         {/* CTA Button */}
-        <a
+        <Link
           href={bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
@@ -251,7 +252,7 @@ export default function Navbar({
           style={{ backgroundColor: colors.green }}
         >
           Get in Touch
-        </a>
+        </Link>
 
         {/* Mobile Hamburger Toggle */}
         <button
@@ -299,7 +300,7 @@ export default function Navbar({
                     {isMobileDropdownOpen && (
                       <div className="pl-4 mt-2 space-y-3 border-l border-neutral-800 my-2">
                         {companyItems.map((comp) => (
-                          <a
+                          <Link
                             key={comp.id}
                             href={`#${comp.id}`}
                             onClick={(e) => handleNavClick(e, comp.id)}
@@ -307,7 +308,7 @@ export default function Navbar({
                           >
                             <img src={comp.logoUrl} alt={comp.name} className="w-5 h-5 rounded object-cover" />
                             <span>{comp.name}</span>
-                          </a>
+                          </Link>
                         ))}
                       </div>
                     )}
@@ -317,7 +318,7 @@ export default function Navbar({
 
               const isActive = activeSection === item.id;
               return (
-                <a
+                <Link
                   key={item.id}
                   href={`#${item.id}`}
                   onClick={(e) => handleNavClick(e, item.id)}
@@ -332,12 +333,12 @@ export default function Navbar({
                       style={{ backgroundColor: colors.accentGreen }}
                     />
                   )}
-                </a>
+                </Link>
               );
             })}
 
             <div className="pt-2">
-              <a
+              <Link
                 href={bookingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -345,7 +346,7 @@ export default function Navbar({
                 style={{ backgroundColor: colors.green }}
               >
                 Get in Touch
-              </a>
+              </Link>
             </div>
           </motion.div>
         )}
