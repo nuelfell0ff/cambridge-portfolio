@@ -9,9 +9,9 @@ const colors = {
 };
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 // Generate static routes for build time optimization
@@ -21,9 +21,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function CompanyDetailPage({ params }: PageProps) {
+export default async function CompanyDetailPage({ params }: PageProps) {
+  // Await the asynchronous params promise (Required in Next.js 15+)
+  const { slug } = await params;
+
   // Find the matching company data using the URL slug
-  const company = companies[params.slug];
+  const company = companies[slug];
 
   // If user enters an invalid URL (e.g. /companies/unknown), show 404 page
   if (!company) {
@@ -136,4 +139,4 @@ export default function CompanyDetailPage({ params }: PageProps) {
       </div>
     </main>
   );
-}
+}    
