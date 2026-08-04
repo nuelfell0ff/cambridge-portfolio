@@ -1,4 +1,5 @@
 "use client";
+
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
 
@@ -68,7 +69,7 @@ export default function FeaturedCompanies() {
     <section 
       id="companies"
       className="py-20 md:py-32 px-6 md:px-12 relative overflow-hidden"
-      style={{ backgroundColor: colors.bgDark, fontFamily: "'Poppins', sans-serif" }}
+      style={{ backgroundColor: colors.bgDark }}
     >
       <div 
         className="absolute top-1/2 right-10 w-[250px] h-[250px] rounded-full pointer-events-none opacity-5 filter blur-[100px]"
@@ -91,7 +92,7 @@ export default function FeaturedCompanies() {
           >
             Leadership & Ventures
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight text-white">
             Featured <span style={{ color: colors.green }}>Companies</span>
           </h2>
           <div className="h-[2px] w-12 mt-6" style={{ backgroundColor: colors.green }} />
@@ -103,14 +104,14 @@ export default function FeaturedCompanies() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainer}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
           {companies.map((company) => (
             <motion.div
               key={company.id}
-              id={company.id} // Added unique ID for smooth scrolling targets
+              id={company.id}
               variants={fadeInUp}
-              className="border border-neutral-900 bg-neutral-950/40 hover:border-neutral-800/80 rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 group hover:shadow-xl scroll-mt-28"
+              className="border border-neutral-900 bg-neutral-950/40 hover:border-neutral-800/80 rounded-2xl p-6 md:p-8 flex flex-col justify-between transition-all duration-300 group hover:shadow-2xl scroll-mt-28"
             >
               <div>
                 <div className="flex items-center gap-4 mb-6">
@@ -122,7 +123,7 @@ export default function FeaturedCompanies() {
                       loading="lazy"
                     />
                   </div>
-                  <h3 className="text-lg font-bold text-neutral-100 leading-snug group-hover:text-white transition-colors">
+                  <h3 className="text-lg md:text-xl font-bold text-neutral-100 leading-snug group-hover:text-white transition-colors">
                     {company.name}
                   </h3>
                 </div>
@@ -133,23 +134,31 @@ export default function FeaturedCompanies() {
 
                 <div className="space-y-4 pt-4 border-t border-neutral-900">
                   <div>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 block">Mission</span>
-                    <p className="text-xs text-neutral-300 font-light leading-relaxed mt-1">{company.mission}</p>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 block">
+                      Mission
+                    </span>
+                    <p className="text-xs text-neutral-300 font-light leading-relaxed mt-1">
+                      {company.mission}
+                    </p>
                   </div>
                   <div>
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 block">Key Impact</span>
-                    <p className="text-xs text-neutral-300 font-light leading-relaxed mt-1">{company.impact}</p>
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-neutral-500 block">
+                      Key Impact
+                    </span>
+                    <p className="text-xs text-neutral-300 font-light leading-relaxed mt-1">
+                      {company.impact}
+                    </p>
                   </div>
                 </div>
               </div>
 
-              {/* External Website Button */}
+              {/* External Link */}
               <div className="pt-8">
                 <a 
                   href={company.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold tracking-wider uppercase transition-all px-4 py-2 rounded-lg border border-neutral-800 hover:border-neutral-700 bg-neutral-900/40"
+                  className="inline-flex items-center gap-2 text-xs font-semibold tracking-wider uppercase transition-all px-4 py-2.5 rounded-lg border border-neutral-800/80 hover:border-neutral-700 bg-neutral-900/40 hover:bg-neutral-900/80"
                   style={{ color: colors.green }}
                 >
                   Visit Website
