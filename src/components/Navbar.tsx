@@ -23,33 +23,33 @@ const fadeInDown: Variants = {
 const companyItems = [
   {
     name: "Lexi AI",
-    id: "company-lexi-ai",
+    href: "/companies/lexi-ai",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_800/v1784823883/SAVE_20260723_172314_nrwugz.jpg"
   },
   {
     name: "MedxLearn",
-    id: "company-medxlearn",
+    href: "/companies/medxlearn",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784284283/SAVE_20260717_113050_dpq3jv.jpg"
   },
   {
     name: "MedxVerse Telemedicine",
-    id: "company-medxverse",
+    href: "/companies/medxverse",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313040/IMG_0341_mpyrmt.jpg"
   },
   {
     name: "MedxGo",
-    id: "company-medxgo",
+    href: "/companies/medxgo",
     logoUrl: "https://res.cloudinary.com/datmds5xl/image/upload/f_auto,q_auto,w_300/v1784313041/Frame_ieybdx.jpg"
   },
 ];
 
 const navItems = [
-  { id: 'home', label: 'Home' },
-  { id: 'about', label: 'About' },
+  { id: '#home', label: 'Home' },
+  { id: '#about', label: 'About' },
   { id: 'companies', label: 'Companies', isDropdown: true },
-  { id: 'gallery', label: 'Gallery' },
-  { id: 'press', label: 'Press' },
-  { id: 'testimonials', label: 'Testimonials' },
+  { id: '#gallery', label: 'Gallery' },
+  { id: '#press', label: 'Press' },
+  { id: '#testimonials', label: 'Testimonials' },
 ];
 
 export default function Navbar({ 
@@ -92,7 +92,8 @@ export default function Navbar({
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
     const sections = navItems
-      .map((item) => document.getElementById(item.id))
+      .filter((item) => item.id.startsWith('#'))
+      .map((item) => document.getElementById(item.id.replace('#', '')))
       .filter((el): el is HTMLElement => el !== null);
 
     sections.forEach((section) => observer.observe(section));
@@ -100,24 +101,29 @@ export default function Navbar({
     return () => observer.disconnect();
   }, []);
 
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
     setIsOpen(false); 
     setIsDropdownOpen(false);
 
-    setTimeout(() => {
-      const element = document.getElementById(id);
-      if (element) {
-        const headerOffset = 84; 
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    // Only prevent default and scroll smoothly if target is an in-page section link
+    if (target.startsWith('#')) {
+      e.preventDefault();
+      const id = target.replace('#', '');
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }, 80);
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) {
+          const headerOffset = 84; 
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
+      }, 80);
+    }
   };
 
   return (
@@ -133,7 +139,7 @@ export default function Navbar({
         {/* Brand Logo */}
         <Link 
           href="#home" 
-          onClick={(e) => handleNavClick(e, 'home')}
+          onClick={(e) => handleNavClick(e, '#home')}
           className="flex items-center space-x-3 group cursor-pointer focus:outline-none"
         >
           <div
@@ -191,9 +197,9 @@ export default function Navbar({
                         >
                           {companyItems.map((comp) => (
                             <Link
-                              key={comp.id}
-                              href={`#${comp.id}`}
-                              onClick={(e) => handleNavClick(e, comp.id)}
+                              key={comp.name}
+                              href={comp.href}
+                              onClick={(e) => handleNavClick(e, comp.href)}
                               className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-800/50 transition-colors group/item cursor-pointer"
                             >
                               <img 
@@ -219,11 +225,12 @@ export default function Navbar({
               );
             }
 
-            const isActive = activeSection === item.id;
+            const cleanId = item.id.replace('#', '');
+            const isActive = activeSection === cleanId;
             return (
               <Link
                 key={item.id}
-                href={`#${item.id}`}
+                href={item.id}
                 onClick={(e) => handleNavClick(e, item.id)}
                 className={`relative pb-1 transition-colors duration-300 flex flex-col items-center group ${
                   isActive ? 'text-white font-semibold' : 'text-neutral-400 hover:text-white'
@@ -301,9 +308,9 @@ export default function Navbar({
                       <div className="pl-4 mt-2 space-y-3 border-l border-neutral-800 my-2">
                         {companyItems.map((comp) => (
                           <Link
-                            key={comp.id}
-                            href={`#${comp.id}`}
-                            onClick={(e) => handleNavClick(e, comp.id)}
+                            key={comp.name}
+                            href={comp.href}
+                            onClick={(e) => handleNavClick(e, comp.href)}
                             className="flex items-center gap-3 py-1.5 text-sm text-neutral-300 hover:text-white"
                           >
                             <img src={comp.logoUrl} alt={comp.name} className="w-5 h-5 rounded object-cover" />
@@ -316,11 +323,12 @@ export default function Navbar({
                 );
               }
 
-              const isActive = activeSection === item.id;
+              const cleanId = item.id.replace('#', '');
+              const isActive = activeSection === cleanId;
               return (
                 <Link
                   key={item.id}
-                  href={`#${item.id}`}
+                  href={item.id}
                   onClick={(e) => handleNavClick(e, item.id)}
                   className={`text-base font-medium flex items-center justify-between py-1 transition-colors ${
                     isActive ? 'text-white font-semibold' : 'text-neutral-400 hover:text-white'
