@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { companies } from '@../data/companies'; // adjust path if needed
+import { companies } from '@/data/companies';
 
 const colors = {
   green: '#1F7299',
