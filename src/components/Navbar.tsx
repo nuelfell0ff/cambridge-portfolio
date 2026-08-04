@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
@@ -18,7 +19,6 @@ const fadeInDown: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
 };
 
-// Updated company items to route to internal section ID or route path
 const companyItems = [
   {
     name: "Lexi AI",
@@ -61,8 +61,9 @@ export default function Navbar({
   const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => setIsOpen((prev) => !prev);
 
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -71,6 +72,31 @@ export default function Navbar({
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  // Track active section on scroll using IntersectionObserver
+  useEffect(() => {
+    const observerCallback: IntersectionObserverCallback = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observerOptions: IntersectionObserverInit = {
+      rootMargin: "-20% 0px -70% 0px",
+      threshold: 0
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    const sections = navItems
+      .map((item) => document.getElementById(item.id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
   }, []);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
@@ -98,7 +124,7 @@ export default function Navbar({
       initial="hidden"
       animate="visible"
       variants={fadeInDown}
-      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-neutral-900/30 backdrop-blur-md"
+      className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b border-neutral-900/40 backdrop-blur-md"
       style={{ backgroundColor: `${colors.bgDark}A6` }}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-4 flex items-center justify-between relative">
@@ -110,7 +136,7 @@ export default function Navbar({
           className="flex items-center space-x-3 group cursor-pointer focus:outline-none"
         >
           <div
-            className="w-8 h-8 md:w-10 md:h-10 rounded-sm transition-transform duration-300 group-hover:rotate-12 flex items-center justify-center font-bold text-xs md:text-sm text-white shadow-inner"
+            className="w-8 h-8 md:w-10 md:h-10 rounded-md transition-transform duration-300 group-hover:rotate-6 flex items-center justify-center font-bold text-xs md:text-sm text-white shadow-md"
             style={{ backgroundColor: colors.green }}
           >
             TO
@@ -152,22 +178,22 @@ export default function Navbar({
                   <AnimatePresence>
                     {isDropdownOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: 10 }}
-                        transition={{ duration: 0.2 }}
+                        initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 8, scale: 0.98 }}
+                        transition={{ duration: 0.15, ease: "easeOut" }}
                         className="absolute left-0 top-full pt-2 w-64 z-50"
                       >
                         <div 
-                          className="rounded-xl border border-neutral-800 p-2 shadow-2xl backdrop-blur-2xl"
-                          style={{ backgroundColor: `${colors.bgDark}EE` }}
+                          className="rounded-xl border border-neutral-800/80 p-2 shadow-2xl backdrop-blur-2xl"
+                          style={{ backgroundColor: `${colors.bgDark}F2` }}
                         >
-                          {companyItems.map((comp, idx) => (
+                          {companyItems.map((comp) => (
                             <a
-                              key={idx}
+                              key={comp.id}
                               href={`#${comp.id}`}
                               onClick={(e) => handleNavClick(e, comp.id)}
-                              className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-800/60 transition-colors group/item cursor-pointer"
+                              className="flex items-center gap-3 p-2.5 rounded-lg hover:bg-neutral-800/50 transition-colors group/item cursor-pointer"
                             >
                               <img 
                                 src={comp.logoUrl} 
@@ -175,9 +201,9 @@ export default function Navbar({
                                 className="w-7 h-7 rounded-md object-cover border border-neutral-800"
                               />
                               <div className="flex-1">
-                                <p className="text-xs font-semibold text-white group-hover/item:text-white flex items-center justify-between">
+                                <p className="text-xs font-semibold text-neutral-200 group-hover/item:text-white flex items-center justify-between">
                                   {comp.name}
-                                  <svg className="w-3 h-3 text-neutral-400 group-hover/item:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                                  <svg className="w-3 h-3 text-neutral-500 group-hover/item:text-neutral-300 group-hover/item:translate-x-0.5 transition-all" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                   </svg>
                                 </p>
@@ -199,7 +225,7 @@ export default function Navbar({
                 href={`#${item.id}`}
                 onClick={(e) => handleNavClick(e, item.id)}
                 className={`relative pb-1 transition-colors duration-300 flex flex-col items-center group ${
-                  isActive ? 'text-white' : 'text-neutral-400 hover:text-white'
+                  isActive ? 'text-white font-semibold' : 'text-neutral-400 hover:text-white'
                 }`}
               >
                 <span>{item.label}</span>
@@ -208,7 +234,7 @@ export default function Navbar({
                     layoutId="activeDot"
                     className="absolute -bottom-1 w-1.5 h-1.5 rounded-full"
                     style={{ backgroundColor: colors.accentGreen }}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
               </a>
@@ -221,17 +247,17 @@ export default function Navbar({
           href={bookingUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden md:block text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-all shadow-md text-center select-none"
+          className="hidden md:inline-flex text-white font-medium px-5 py-2.5 rounded-lg text-sm transition-transform duration-200 active:scale-95 shadow-md hover:opacity-95 text-center select-none"
           style={{ backgroundColor: colors.green }}
         >
           Get in Touch
         </a>
 
-        {/* Mobile Hamburger */}
+        {/* Mobile Hamburger Toggle */}
         <button
           onClick={toggleMenu}
           className="md:hidden flex flex-col justify-center items-center w-8 h-8 space-y-1.5 focus:outline-none z-50"
-          aria-label="Toggle Menu"
+          aria-label="Toggle Navigation Menu"
         >
           <span className={`w-6 h-0.5 bg-white transition-transform duration-300 ${isOpen ? 'rotate-45 translate-y-2' : ''}`} />
           <span className={`w-6 h-0.5 bg-white transition-opacity duration-300 ${isOpen ? 'opacity-0' : 'opacity-100'}`} />
@@ -246,9 +272,9 @@ export default function Navbar({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="md:hidden absolute top-full left-0 w-full border-b border-neutral-800/50 p-6 flex flex-col space-y-5 shadow-2xl backdrop-blur-xl"
-            style={{ backgroundColor: `${colors.bgDark}FA` }}
+            transition={{ duration: 0.25, ease: 'easeInOut' }}
+            className="md:hidden absolute top-full left-0 w-full border-b border-neutral-800/80 p-6 flex flex-col space-y-5 shadow-2xl backdrop-blur-xl overflow-hidden"
+            style={{ backgroundColor: `${colors.bgDark}F7` }}
           >
             {navItems.map((item) => {
               if (item.isDropdown) {
@@ -272,9 +298,9 @@ export default function Navbar({
 
                     {isMobileDropdownOpen && (
                       <div className="pl-4 mt-2 space-y-3 border-l border-neutral-800 my-2">
-                        {companyItems.map((comp, idx) => (
+                        {companyItems.map((comp) => (
                           <a
-                            key={idx}
+                            key={comp.id}
                             href={`#${comp.id}`}
                             onClick={(e) => handleNavClick(e, comp.id)}
                             className="flex items-center gap-3 py-1.5 text-sm text-neutral-300 hover:text-white"
@@ -296,7 +322,7 @@ export default function Navbar({
                   href={`#${item.id}`}
                   onClick={(e) => handleNavClick(e, item.id)}
                   className={`text-base font-medium flex items-center justify-between py-1 transition-colors ${
-                    isActive ? 'text-white' : 'text-neutral-400 hover:text-white'
+                    isActive ? 'text-white font-semibold' : 'text-neutral-400 hover:text-white'
                   }`}
                 >
                   <span>{item.label}</span>
@@ -309,6 +335,18 @@ export default function Navbar({
                 </a>
               );
             })}
+
+            <div className="pt-2">
+              <a
+                href={bookingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-center text-white font-medium px-5 py-3 rounded-lg text-sm shadow-md"
+                style={{ backgroundColor: colors.green }}
+              >
+                Get in Touch
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
